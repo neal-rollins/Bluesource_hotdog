@@ -1,0 +1,10 @@
+/MustardFailSafe.txt
+/Helpers/AppiumConnect/config.json
+.idea/**
+/Tests/temp.png
+/Tests/*.png
+Tests/*.png
+/temp.png
+temp.png
+*.png
+*.pyc
