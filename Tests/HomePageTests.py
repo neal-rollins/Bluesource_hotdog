@@ -10,20 +10,62 @@ class HomePageTests(BaseTest):
 
     def test_NavigateToSeries(self):
         #Launch the Web App
-        self.launchWebApp()
+        common = CommonPage(driver=self.driver)
+        self.driver.maximize_window()
+        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
 
         #Web App is Launched, Navigate to Shows Section
-        common = CommonPage(driver=self.driver)
         common.navigateToSection('Shows')
+        sleep(3)
         common.assertDropdownIsPresent()
 
     def test_StreamFor5Minutes(self):
-        common = CommonPage(self)
-        common.clickFeaturedItem(1)
+        #Launch the Web App
+        common = CommonPage(driver=self.driver)
+        self.driver.maximize_window()
+        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
+
+        #Click Featured Item
+        sleep(10)
+        featuredList = self.driver.find_elements_by_class_name('asset-info')
+        common.clickFeaturedItem(featuredList, 1)
+
+        #Click First Episode
         showDetail = ShowDetailsPage(self)
-        showDetail.clickShow(1)
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        showList = self.driver.find_elements_by_class_name('media-image')
+        showDetail.clickShow(showList, 1)
 
+        #Click Play
+        showDetail.playVideo()
+        showDetail.pauseVideoPlayer()
+        startTime = showDetail.getTimeStamp()
+        showDetail.playVideo()
 
+        #Let Video Play For a Minute
+        sleep(55)
 
+        #Pause Video and Record Time Stamp
+        showDetail.pauseVideoPlayer()
+        endTime = showDetail.getTimeStamp()
+        showDetail.verifyVideoHasPlayed(startTime, endTime)
 
+    def test_TestHomeCarousel(self):
+        #Launch the Web App
+        common = CommonPage(driver=self.driver)
+        self.driver.maximize_window()
+        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
+        sleep(5)
+        #Click the Right Carousel Arrow
+        carouselTitle1 = common.getCurrentCarouselTitle()
+        print(carouselTitle1)
+        common.clickCarousel('Right')
 
+        #Get Title and Compare It
+        carouselTitle2 = common.getCurrentCarouselTitle()
+        common.assertTwoThingsNotEqual(carouselTitle1, carouselTitle2)
+
+        #Click the Left Carousel Arrow then Compare it
+        common.clickCarousel('Left')
+        carouselTitle3 = common.getCurrentCarouselTitle()
+        common.assertTwoThingsEqual(carouselTitle3, carouselTitle1)
