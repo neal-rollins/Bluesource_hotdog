@@ -29,6 +29,7 @@ class ShowDetailsPage(CBCWebBase):
         season = Find(context=self, by=By.CLASS_NAME, value='active')
         season.text()
         print(season.text())
+        return season.text()
 
     def goToPreviousSeason(self):
         #Get Season and Season Number

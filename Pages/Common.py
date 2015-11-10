@@ -14,8 +14,10 @@ class CommonPage(CBCWebBase):
     btnKids = Find(by=By.CSS_SELECTOR, value='#catalog-menu > div.nav-bar-section.menu-toggling.toggle-mobile > ul > li:nth-child(4) > a')
     genreDropdown = Find(by=By.CLASS_NAME, value='controls-label')
     # genreDropdown = Find(by=By.CSS_SELECTOR, value='#main-content > div > nav > div > ul > li:nth-child(2) > div > button > span')
-    btnCarouselNext = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > ul > li:nth-child(2) > button')
-    btnCarouselPrevious = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > ul > li:nth-child(1) > button')
+    # btnCarouselNext = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > ul > li:nth-child(2) > button')
+    btnCarouselNext = Find(by=By.XPATH, value='//*[@id="main-content"]/div/div/div/div/ul/li[2]/button')
+    # btnCarouselPrevious = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > ul > li:nth-child(1) > button')
+    btnCarouselPrevious = Find(by=By.XPATH, value='//*[@id="main-content"]/div/div/div/div/ul/li[1]/button')
     # txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
     txtCarouselTagline = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > span > div > div > figure > figcaption > h2')
 

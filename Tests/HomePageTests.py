@@ -63,9 +63,27 @@ class HomePageTests(BaseTest):
 
         #Get Title and Compare It
         carouselTitle2 = common.getCurrentCarouselTitle()
+        print(carouselTitle2)
         common.assertTwoThingsNotEqual(carouselTitle1, carouselTitle2)
 
         #Click the Left Carousel Arrow then Compare it
         common.clickCarousel('Left')
         carouselTitle3 = common.getCurrentCarouselTitle()
+        print(carouselTitle3)
         common.assertTwoThingsEqual(carouselTitle3, carouselTitle1)
+
+    def test_EpisodeNumbers(self):
+        #Launch the Web App
+        common = CommonPage(driver=self.driver)
+        self.driver.maximize_window()
+        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
+        sleep(5)
+
+        #Click Series Section
+        common.navigateToSection('Shows')
+        showDetails = ShowDetailsPage(driver=self.driver)
+        showList = self.driver.find_elements_by_class_name('media-image')
+        showDetails.clickShow(showList, 0)
+        showDetails.getCurrentSeason()
+        showDetails.goToPreviousSeason()
+
