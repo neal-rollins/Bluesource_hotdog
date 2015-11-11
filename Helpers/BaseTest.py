@@ -17,3 +17,8 @@ class BaseTest(HotDogBaseTest):
             builtins.threadlocal = threading.local()
             builtins.threadlocal.config = DeviceSelector(platform='desktop').getDevice()[0]
     pass
+
+    def assertAlphabetical(self, list):
+        for i in range(len(list)-1):
+            assert list[i].lower() < list[i+1].lower(), 'Items not in alphabetical order.  Found entry [%s] before [%s]' % (list[i], list[i+1])
+

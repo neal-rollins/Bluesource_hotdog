@@ -1,3 +1,5 @@
+from Pages.ShowsPage import ShowsPage
+
 __author__ = 'brian.menzies'
 import unittest
 from selenium import webdriver
@@ -8,16 +10,7 @@ from Pages.ShowDetails import ShowDetailsPage
 
 class HomePageTests(BaseTest):
 
-    def test_NavigateToSeries(self):
-        #Launch the Web App
-        common = CommonPage(driver=self.driver)
-        self.driver.maximize_window()
-        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
 
-        #Web App is Launched, Navigate to Shows Section
-        common.navigateToSection('Shows')
-        sleep(3)
-        common.assertDropdownIsPresent()
 
     def test_StreamFor5Minutes(self):
         #Launch the Web App
