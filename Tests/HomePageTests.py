@@ -25,9 +25,7 @@ class HomePageTests(BaseTest):
 
         #Click First Episode
         showDetail = ShowDetailsPage(self)
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        showList = self.driver.find_elements_by_class_name('media-image')
-        showDetail.clickShow(showList, 1)
+        showDetail.clickOnEpisode(random=True)
 
         #Click Play
         showDetail.playVideo()
@@ -75,8 +73,7 @@ class HomePageTests(BaseTest):
         #Click Series Section
         common.navigateToSection('Shows')
         showDetails = ShowDetailsPage(driver=self.driver)
-        showList = self.driver.find_elements_by_class_name('media-image')
-        showDetails.clickShow(showList, 0)
+        showDetails.clickOnEpisode(random=True)
         showDetails.getCurrentSeason()
         showDetails.goToPreviousSeason()
 

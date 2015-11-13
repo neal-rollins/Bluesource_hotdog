@@ -1,3 +1,5 @@
+from selenium.webdriver.remote.webelement import WebElement
+import random as rand
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -5,27 +7,46 @@ from hotdog.FindEither import FindEither
 from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
 
+class EpisodeDetail(WebElement):
+    imgShowImage = Find(by=By.CLASS_NAME, value='media-image')
+    txtEpisodeDetail = Find(by=By.CLASS_NAME, value='episode-meta')
+    txtEpisodeTitle = Find(by=By.CLASS_NAME, value='episode-title')
+    txtEpisodeDescription = Find(by=By.CLASS_NAME, value='description')
+
 class ShowDetailsPage(CBCWebBase):
     txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')
-    episodeTitle = Find(by=By.CLASS_NAME, value='episode-title')
-    episodeNumber = Find(by=By.CLASS_NAME, value='episode-number')
-    episodeDescription = Find(by=By.CLASS_NAME, value='description')
-    currentSeason = Find(by=By.CLASS_NAME, value='active')
+    listEpisodes = Finds(EpisodeDetail, by=By.CSS_SELECTOR, value='figure.media-card')
+    imgHero = Find(by=By.CLASS_NAME, value='media-hero')
+    imgAd = Find(by=By.ID, value='showAd')
 
-    def clickShow(self, listOfShows, numberOfShowToClick):
-        number = int(numberOfShowToClick) - 1
-        listOfShows[number].click()
 
-    def clickEpisode(self, numberEpisodeToClick):
-        episodes = Finds(context=self, by=By.CLASS_NAME, value='media-thumbnail-container')
-        number = int(numberEpisodeToClick) - 1
-        episodes[number].click()
+    def clickOnEpisode(self, title=None, index=0, random=False):
+
+        if random:
+            episode = rand.choice(self.listEpisodes)
+            episodeTitle = episode.txtEpisodeTitle.text
+            episode.click()
+        elif title:
+            found = False
+            for episode in self.listEpisodes:
+                if episode.txtEpisodeTitle.text.lower() == title.lower():
+                    episodeTitle = episode.txtEpisodeTitle.text
+                    episode.click()
+                    found = True
+                    break
+            if not found:
+                raise AssertionError('Could not find show with title [%s]' % title)
+        else:
+            episodeTitle = self.listEpisodes[index].txtEpisodeTitle.text
+            self.listEpisodes[index].click()
+
+        return episodeTitle
 
     def getCurrentSeason(self):
         season = Find(context=self, by=By.CLASS_NAME, value='active')
-        season.text()
-        print(season.text())
-        return season.text()
+        season.text
+        print(season.text)
+        return season.text
 
     def goToPreviousSeason(self):
         #Get Season and Season Number

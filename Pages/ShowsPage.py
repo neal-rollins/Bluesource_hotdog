@@ -70,8 +70,11 @@ class ShowsPage(CBCWebBase):
                     showTitle = show.txtTitle.text
                     show.imgShowBanner.click()
                     found = True
+                    break
             if not found:
                 raise AssertionError('Could not find show with title [%s]' % title)
         else:
             showTitle = self.shows[index].txtTitle.text
             self.shows[index].imgShowBanner.click()
+
+        return showTitle

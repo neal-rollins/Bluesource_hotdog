@@ -22,3 +22,5 @@ class BaseTest(HotDogBaseTest):
         for i in range(len(list)-1):
             assert list[i].lower() < list[i+1].lower(), 'Items not in alphabetical order.  Found entry [%s] before [%s]' % (list[i], list[i+1])
 
+    def assert_element_exists(self, element, name):
+        assert element.is_displayed(), 'The element [%s] was not found' % name
