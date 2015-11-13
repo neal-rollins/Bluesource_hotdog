@@ -30,21 +30,23 @@ class ShowsTest(BaseTest):
 
 
     def test_navigateAllShows(self):
-
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
         common.navigateToSection('SHOWS')
 
-        #Navigate to all shows
+        #Click The All Button to Show All Shows
         shows = ShowsPage(driver=self.driver)
         shows.subnav.btnAll.click()
 
-        #Validate All Shows Page elements
+        #Assert All Shows Are in Alphabetical Order
         sleep(1)
         showTitles = shows.getTitles()
         self.assertGreater(len(showTitles), 0, 'No Shows found on shows page')
         self.assertAlphabetical(showTitles)
+
+        #Click on a Random Show
+        shows.clickOnShow(random=True)
 
         for show in shows.shows:
             assert show.imgShowBanner
@@ -91,7 +93,6 @@ class ShowsTest(BaseTest):
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
         common.navigateToSection('SHOWS')
-
         #Navigate to all shows
         shows = ShowsPage(driver=self.driver)
         shows.subnav.btnAll.click()

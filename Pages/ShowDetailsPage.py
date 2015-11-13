@@ -6,6 +6,7 @@ from appium.webdriver.common.mobileby import MobileBy as By
 from hotdog.FindEither import FindEither
 from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
+from selenium.webdriver.remote.webelement import WebElement
 
 class EpisodeDetail(WebElement):
     imgShowImage = Find(by=By.CLASS_NAME, value='media-image')

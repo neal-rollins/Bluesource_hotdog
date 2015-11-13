@@ -10,7 +10,8 @@ class ContentDetailPage(CBCWebBase):
     btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
     btnVideoPlayer = Find(by=By.ID, value='jwplayer')
     txtElapsedTime = Find(by=By.CLASS_NAME, value='jw-text-elapsed')
-
+    txtDuration = Find(by=By.CLASS_NAME, value='duration')
+    txtBreadcrumbs = Find(by=By.CLASS_NAME, value='breadcrumbs')
 
     def pauseVideoPlayer(self):
         self.btnVideoPlayer.click()

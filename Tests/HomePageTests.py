@@ -1,27 +1,34 @@
-from Pages.ShowsPage import ShowsPage
-
 __author__ = 'brian.menzies'
 import unittest
 from selenium import webdriver
 from time import sleep
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
+from Pages.FeaturedPage import FeaturedPage
+from Pages.ShowsPage import ShowsPage
 from Pages.ShowDetailsPage import ShowDetailsPage
 
 class HomePageTests(BaseTest):
 
-
-
     def test_StreamFor5Minutes(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver)
+        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common.open()
         self.driver.maximize_window()
-        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
+        common.assert_element_present('navbar')
+        common.assert_element_present('carousel')
+        common.assert_element_present('carouselDots')
 
-        #Click Featured Item
-        sleep(10)
-        featuredList = self.driver.find_elements_by_class_name('asset-info')
-        common.clickFeaturedItem(featuredList, 1)
+        #Navigate To Shows Page and Run Asserts
+        common.navigateToSection('Shows')
+        common.assert_element_present('navbar')
+        common.assert_element_present('carousel')
+        common.assert_element_present('carouselDots')
+        shows = ShowsPage(driver=self.driver)
+
+        #Click First Featured Item
+        print(shows.getTitles())
+        shows.clickOnShow(index=0)
 
         #Click First Episode
         showDetail = ShowDetailsPage(self)
@@ -29,51 +36,62 @@ class HomePageTests(BaseTest):
 
         #Click Play
         showDetail.playVideo()
-        showDetail.pauseVideoPlayer()
-        startTime = showDetail.getTimeStamp()
-        showDetail.playVideo()
+        # showDetail.pauseVideoPlayer()
+        # startTime = showDetail.getTimeStamp()
+        # showDetail.playVideo()
 
         #Let Video Play For a Minute
         sleep(55)
 
         #Pause Video and Record Time Stamp
-        showDetail.pauseVideoPlayer()
-        endTime = showDetail.getTimeStamp()
-        showDetail.verifyVideoHasPlayed(startTime, endTime)
+        # showDetail.pauseVideoPlayer()
+        # endTime = showDetail.getTimeStamp()
+        # showDetail.verifyVideoHasPlayed(startTime, endTime)
 
     def test_TestHomeCarousel(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver)
+        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common.open()
         self.driver.maximize_window()
-        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
-        sleep(5)
-        #Click the Right Carousel Arrow
-        carouselTitle1 = common.getCurrentCarouselTitle()
+
+        #Stop the Carousel by Clicking the Pause Button
+        featured = FeaturedPage(driver=self.driver)
+        featured.btnPlayPauseCarousel.click()
+        carouselTitle1 = featured.getCurrentCarouselTitle()
         print(carouselTitle1)
-        common.clickCarousel('Right')
+
+        #Click the Right Carousel Arrow
+        featured.cycleThroughCarousel('Right')
+        sleep(3)
 
         #Get Title and Compare It
-        carouselTitle2 = common.getCurrentCarouselTitle()
+        carouselTitle2 = featured.getCurrentCarouselTitle()
         print(carouselTitle2)
-        common.assertTwoThingsNotEqual(carouselTitle1, carouselTitle2)
+        self.assertNotEqual(carouselTitle1, carouselTitle2)
 
         #Click the Left Carousel Arrow then Compare it
-        common.clickCarousel('Left')
-        carouselTitle3 = common.getCurrentCarouselTitle()
+        featured.cycleThroughCarousel('Left')
+        carouselTitle3 = featured.getCurrentCarouselTitle()
         print(carouselTitle3)
-        common.assertTwoThingsEqual(carouselTitle3, carouselTitle1)
+        self.assertEqual(carouselTitle3, carouselTitle1)
 
     def test_EpisodeNumbers(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver)
+        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common.open()
         self.driver.maximize_window()
-        self.driver.get('http://project-igloo.maple.willowtreemobile.com/')
-        sleep(5)
 
         #Click Series Section
         common.navigateToSection('Shows')
+        shows = ShowsPage(driver=self.driver)
+        shows.navigateSubNav('all')
         showDetails = ShowDetailsPage(driver=self.driver)
+<<<<<<< HEAD
         showDetails.clickOnEpisode(random=True)
+=======
+        showList = self.driver.find_elements_by_class_name('media-image')
+        print(showList)
+        showDetails.clickShow(showList, 0)
+>>>>>>> cc9bf7867100d499d90e6457c6217ac2f3d264b5
         showDetails.getCurrentSeason()
         showDetails.goToPreviousSeason()
-
