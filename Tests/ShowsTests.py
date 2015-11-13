@@ -1,6 +1,5 @@
 import random
 from time import sleep
-import webium
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
 from Pages.ShowDetailsPage import ShowDetailsPage
@@ -64,6 +63,7 @@ class ShowsTest(BaseTest):
         shows = ShowsPage(driver=self.driver)
         sleep(2)
         genreList = shows.getGenreList()
+        self.assertAlphabetical(genreList)
         genres = expectedGenres
         self.assertGreater(len(genreList), 0, 'No Genres Found for Shows')
         self.assertEqual(len(genreList), len(genres), 'Unexpected number of genres found.  Expected [%s]. Actual [%s]' % (len(genres), len(genreList)))
