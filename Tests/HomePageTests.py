@@ -86,12 +86,6 @@ class HomePageTests(BaseTest):
         shows = ShowsPage(driver=self.driver)
         shows.navigateSubNav('all')
         showDetails = ShowDetailsPage(driver=self.driver)
-<<<<<<< HEAD
         showDetails.clickOnEpisode(random=True)
-=======
-        showList = self.driver.find_elements_by_class_name('media-image')
-        print(showList)
-        showDetails.clickShow(showList, 0)
->>>>>>> cc9bf7867100d499d90e6457c6217ac2f3d264b5
         showDetails.getCurrentSeason()
         showDetails.goToPreviousSeason()
