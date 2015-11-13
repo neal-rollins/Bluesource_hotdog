@@ -14,7 +14,7 @@ class GenreDropdown(WebElement):
 class SubNav(WebElement):
     btnNewReleases = Find(by=By.LINK_TEXT, value='NEW RELEASES')
     btnAll = Find(by=By.LINK_TEXT, value='ALL')
-    btnGenre = Find(by=By.LINK_TEXT, value='NEW RELEASES')
+    btnGenre = Find(by=By.CLASS_NAME, value='dropdown')
     dropdownGenre = Find(GenreDropdown, by=By.CLASS_NAME, value='menu')
 
 
@@ -49,6 +49,7 @@ class ShowsPage(CBCWebBase):
         else:
             raise ValueError(msg='[%s] is not a valid genre' % genre)
 
+
     def getTitles(self):
         titles = []
         for show in self.shows:
@@ -57,16 +58,20 @@ class ShowsPage(CBCWebBase):
         return titles
 
     def clickOnShow(self, title=None, index=0, random=False):
+
         if random:
             show = rand.choice(self.shows)
+            showTitle = show.txtTitle.text
             show.imgShowBanner.click()
         elif title:
             found = False
             for show in self.shows:
                 if show.txtTitle.text.lower() == title.lower():
+                    showTitle = show.txtTitle.text
                     show.imgShowBanner.click()
                     found = True
             if not found:
                 raise AssertionError('Could not find show with title [%s]' % title)
         else:
+            showTitle = self.shows[index].txtTitle.text
             self.shows[index].imgShowBanner.click()

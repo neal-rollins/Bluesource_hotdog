@@ -6,15 +6,11 @@ from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
 
 class ShowDetailsPage(CBCWebBase):
+    txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')
     episodeTitle = Find(by=By.CLASS_NAME, value='episode-title')
     episodeNumber = Find(by=By.CLASS_NAME, value='episode-number')
     episodeDescription = Find(by=By.CLASS_NAME, value='description')
     currentSeason = Find(by=By.CLASS_NAME, value='active')
-    # currentSeason = Find(by=By.CSS_SELECTOR, value='#main-content > div > nav > div > div > div > ul > li.selected > a')
-    btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
-    btnVideoPlayer = Find(by=By.ID, value='jwplayer')
-    txtElapsedTime = Find(by=By.CLASS_NAME, value='jw-text-elapsed')
-    # txtElapsedTime = Find(by=By.CSS_SELECTOR, value='#jwplayer > div.jw-controls.jw-reset > div.jw-controlbar.jw-background-color.jw-reset > div.jw-group.jw-controlbar-left-group.jw-reset > span')
 
     def clickShow(self, listOfShows, numberOfShowToClick):
         number = int(numberOfShowToClick) - 1
@@ -49,23 +45,6 @@ class ShowDetailsPage(CBCWebBase):
         previousSeason = 'Season ' + str(previousSesaonNumber)
         return previousSeason
 
-    def pauseVideoPlayer(self):
-        self.btnVideoPlayer.click()
-        self.assert_element_present('txtPausedState', timeout=3), 'The Video Player Was Not Paused'
-
-    def getTimeStamp(self):
-        timeElapsed = self.txtElapsedTime.text
-        timeElapsed.split(':')
-        minutes = int(timeElapsed[0]) * 60
-        seconds = int(timeElapsed[1])
-        timeStamp = minutes + seconds
-        return timeStamp
-
-    def verifyVideoHasPlayed(self, timeAtStart, timeAtEnd):
-        assert timeAtEnd > timeAtStart, 'Expected [%s] to be greater than [%s]' % (timeAtEnd, timeAtStart)
-
-    def playVideo(self):
-        self.btnPlay.click()
 
 
 

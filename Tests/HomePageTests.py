@@ -6,7 +6,7 @@ from selenium import webdriver
 from time import sleep
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
-from Pages.ShowDetails import ShowDetailsPage
+from Pages.ShowDetailsPage import ShowDetailsPage
 
 class HomePageTests(BaseTest):
 
