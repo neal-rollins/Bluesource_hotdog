@@ -1,3 +1,5 @@
+from time import sleep
+
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -7,11 +9,17 @@ from Helpers.BasePage import CBCWebBase
 
 class ContentDetailPage(CBCWebBase):
 
+    txtBreadcrumbs = Find(by=By.CSS_SELECTOR, value='.breadcrumbs a')
     btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
-    btnVideoPlayer = Find(by=By.ID, value='jwplayer')
+    videoPlayer = Find(by=By.ID, value='jwplayer')
+    imgAd = Find(by=By.CLASS_NAME, value='ad-wrapper')
     txtElapsedTime = Find(by=By.CLASS_NAME, value='jw-text-elapsed')
+    txtEpisodeNumber = Find(by=By.CLASS_NAME, value='episode-number')
     txtDuration = Find(by=By.CLASS_NAME, value='duration')
-    txtBreadcrumbs = Find(by=By.CLASS_NAME, value='breadcrumbs')
+    txtEpisodeTitle = Find(by=By.CLASS_NAME, value='detail-title')
+    txtDescription = Find(by=By.CLASS_NAME, value='description')
+    txtCredits = Find(by=By.CLASS_NAME, value='credits')
+
 
     def pauseVideoPlayer(self):
         self.btnVideoPlayer.click()
@@ -19,7 +27,7 @@ class ContentDetailPage(CBCWebBase):
 
     def getTimeStamp(self):
         timeElapsed = self.txtElapsedTime.text
-        timeElapsed.split(':')
+        timeElapsed = timeElapsed.split(':')
         minutes = int(timeElapsed[0]) * 60
         seconds = int(timeElapsed[1])
         timeStamp = minutes + seconds
@@ -28,8 +36,18 @@ class ContentDetailPage(CBCWebBase):
     def verifyVideoHasPlayed(self, timeAtStart, timeAtEnd):
         assert timeAtEnd > timeAtStart, 'Expected [%s] to be greater than [%s]' % (timeAtEnd, timeAtStart)
 
-    def playVideo(self):
+    def playVideo(self, loadTime=5, playTime=10):
         self.btnPlay.click()
+        sleep(loadTime)
+        self.videoPlayer.click()
+        startTime = self.getTimeStamp()
+        self.videoPlayer.click()
+        sleep(playTime)
+        self.videoPlayer.click()
+        endTime = self.getTimeStamp()
+        self.verifyVideoHasPlayed(startTime, endTime)
+
+
 
 
 

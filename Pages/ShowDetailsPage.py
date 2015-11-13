@@ -11,7 +11,8 @@ from selenium.webdriver.remote.webelement import WebElement
 class EpisodeDetail(WebElement):
     imgShowImage = Find(by=By.CLASS_NAME, value='media-image')
     txtEpisodeDetail = Find(by=By.CLASS_NAME, value='episode-meta')
-    txtEpisodeTitle = Find(by=By.CLASS_NAME, value='episode-title')
+    txtEpisodeTitle = FindEither(selectors=[[By.CLASS_NAME, 'episode-title'],
+                                  [By.CLASS_NAME, 'asset-title']])
     txtEpisodeDescription = Find(by=By.CLASS_NAME, value='description')
 
 class ShowDetailsPage(CBCWebBase):

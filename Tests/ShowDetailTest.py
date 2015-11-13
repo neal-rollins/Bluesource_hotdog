@@ -1,6 +1,7 @@
 from time import sleep
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
+from Pages.ContentDetailPage import ContentDetailPage
 from Pages.ShowDetailsPage import ShowDetailsPage
 from Pages.ShowsPage import ShowsPage
 
@@ -42,8 +43,11 @@ class ShowDetailsTest(BaseTest):
         shows = ShowsPage(driver=self.driver)
         showTitle = shows.clickOnShow(title='Doc Zone')
 
-        #Validate Show Detail Elements
+        #Validate Content Detail Loads
         sleep(1)
-        showDetail = ShowDetailsPage(driver=self.driver)
         for x in range(5):
+            showDetail = ShowDetailsPage(driver=self.driver)
             episodeTitle = showDetail.clickOnEpisode(random=True)
+            contentDetail = ContentDetailPage(driver=self.driver)
+            self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
+            contentDetail.back()

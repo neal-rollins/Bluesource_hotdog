@@ -24,3 +24,4 @@ class BaseTest(HotDogBaseTest):
 
     def assert_element_exists(self, element, name):
         assert element.is_displayed(), 'The element [%s] was not found' % name
+

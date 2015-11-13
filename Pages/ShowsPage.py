@@ -1,3 +1,4 @@
+from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
@@ -9,6 +10,7 @@ class GenreDropdown(WebElement):
     btnComedy = Find(by=By.LINK_TEXT, value='COMEDY')
     btnDocumentary = Find(by=By.LINK_TEXT, value='DOCUMENTARY')
     btnDrama = Find(by=By.LINK_TEXT, value='DRAMA')
+    listDropdownOptions = Finds(by=By.CLASS_NAME, value='dropdown-option')
 
 
 class SubNav(WebElement):
@@ -35,6 +37,15 @@ class ShowsPage(CBCWebBase):
         else:
             raise ValueError(msg='[%s] is not a valid subsection' % title)
 
+    def getGenreList(self):
+        self.subnav.btnGenre.click()
+        sleep(1)
+        genrelist = []
+        for genre in self.subnav.dropdownGenre.listDropdownOptions:
+            genrelist.append(genre.text)
+        self.subnav.btnGenre.click()
+        return genrelist
+
     def navigateGenreDropdown(self, genre):
         self.subnav.btnGenre.click()
 
@@ -47,7 +58,7 @@ class ShowsPage(CBCWebBase):
         elif genre.lower() == 'drama':
             self.subnav.dropdownGenre.btnDrama.click()
         else:
-            raise ValueError(msg='[%s] is not a valid genre' % genre)
+            raise ValueError('[%s] is not a valid genre' % genre)
 
 
     def getTitles(self):

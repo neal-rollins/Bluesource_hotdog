@@ -1,6 +1,8 @@
+import random
 import time
 from hotdog.BasePage import HotDogBasePage
 from hotdog.FindEither import FindEither
+from selenium.webdriver import ActionChains
 from webium import Find
 import webium
 
@@ -12,4 +14,4 @@ class CBCWebBase(HotDogBasePage):
         super().__init__(*args, **kwargs)
 
     def back(self):
-        self.driver.executeScript("window.history.go(-1)");
+        self.driver.execute_script("window.history.go(-1)");
