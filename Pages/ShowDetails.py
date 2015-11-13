@@ -4,16 +4,22 @@ from appium.webdriver.common.mobileby import MobileBy as By
 from hotdog.FindEither import FindEither
 from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
+from selenium.webdriver.remote.webelement import WebElement
 
 class ShowDetailsPage(CBCWebBase):
+    btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
+    btnPauseIcon = Find(by=By.CLASS_NAME, value='jw-icon-playback')
+    btnVideoPlayer = Find(by=By.ID, value='jwplayer')
+    txtElapsedTime = Find(by=By.CLASS_NAME, value='jw-text-elapsed')
     episodeTitle = Find(by=By.CLASS_NAME, value='episode-title')
     episodeNumber = Find(by=By.CLASS_NAME, value='episode-number')
     episodeDescription = Find(by=By.CLASS_NAME, value='description')
+    listOfEpisodes = Finds(by=By.CLASS_NAME, value='media-thumbnail-container')
     currentSeason = Find(by=By.CLASS_NAME, value='active')
     # currentSeason = Find(by=By.CSS_SELECTOR, value='#main-content > div > nav > div > div > div > ul > li.selected > a')
-    btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
-    btnVideoPlayer = Find(by=By.ID, value='jwplayer')
-    txtElapsedTime = Find(by=By.CLASS_NAME, value='jw-text-elapsed')
+
+
+
     # txtElapsedTime = Find(by=By.CSS_SELECTOR, value='#jwplayer > div.jw-controls.jw-reset > div.jw-controlbar.jw-background-color.jw-reset > div.jw-group.jw-controlbar-left-group.jw-reset > span')
 
     def clickShow(self, listOfShows, numberOfShowToClick):
@@ -21,14 +27,15 @@ class ShowDetailsPage(CBCWebBase):
         listOfShows[number].click()
 
     def clickEpisode(self, numberEpisodeToClick):
-        episodes = Finds(context=self, by=By.CLASS_NAME, value='media-thumbnail-container')
+        episodes = self.listOfEpisodes
         number = int(numberEpisodeToClick) - 1
         episodes[number].click()
 
     def getCurrentSeason(self):
-        season = Find(context=self, by=By.CLASS_NAME, value='active')
-        season.text()
-        print(season.text())
+        season = Find(context=self, by=By.CLASS_NAME, value='selected')
+        print(season)
+        # season.text()
+        # print(season.text())
         return season.text()
 
     def goToPreviousSeason(self):
@@ -50,7 +57,7 @@ class ShowDetailsPage(CBCWebBase):
         return previousSeason
 
     def pauseVideoPlayer(self):
-        self.btnVideoPlayer.click()
+        self.btnPauseIcon.click()
         self.assert_element_present('txtPausedState', timeout=3), 'The Video Player Was Not Paused'
 
     def getTimeStamp(self):

@@ -14,7 +14,7 @@ class ShowsTest(BaseTest):
         #Web App is Launched, Navigate to Shows Section
         common.navigateToSection('Shows')
 
-
+        #Assert Elements Present on Page and that Items Are Present
         shows = ShowsPage(driver=self.driver)
         shows.assert_element_present('subnav')
         shows.assert_element_present('subnav.btnNewReleases')
@@ -25,18 +25,21 @@ class ShowsTest(BaseTest):
 
 
     def test_AllSeriesClickHero(self):
-
+        #Launch Web App, Navigate to Shows Section
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
         common.navigateToSection('SHOWS')
 
+        #Click The All Button to Show All Shows
         shows = ShowsPage(driver=self.driver)
         shows.subnav.btnAll.click()
 
+        #Assert All Shows Are in Alphabetical Order
         sleep(1)
         showTitles = shows.getTitles()
         self.assertAlphabetical(showTitles)
 
+        #Click on a Random Show
         shows.clickOnShow(random=True)
 
 
