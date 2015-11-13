@@ -6,7 +6,7 @@ from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
 from Pages.FeaturedPage import FeaturedPage
 from Pages.ShowsPage import ShowsPage
-from Pages.ShowDetails import ShowDetailsPage
+from Pages.ShowDetailsPage import ShowDetailsPage
 
 class HomePageTests(BaseTest):
 
