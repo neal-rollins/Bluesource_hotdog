@@ -19,6 +19,9 @@ class ShowsTest(BaseTest):
         #Web App is Launched, Navigate to Shows Section
         common.navigateToSection('Shows')
 
+        #Validate On Shows Page
+        self.assertIn('active', common.navbar.btnShows.get_attribute('class'), 'Featured is not active tab')
+
         #Validate elements of Shows page
         shows = ShowsPage(driver=self.driver)
         self.assert_element_exists(shows.subnav.btnAll, 'All Shows Button')

@@ -6,7 +6,6 @@ from Helpers.FilePath import get_full_path
 
 
 os.environ['PROJECTFOLDER'] = get_full_path('')
-
 from hotdog.BaseTest import HotDogBaseTest
 
 class BaseTest(HotDogBaseTest):

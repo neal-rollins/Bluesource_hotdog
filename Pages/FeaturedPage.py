@@ -1,8 +1,17 @@
+from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
 from Helpers.BasePage import CBCWebBase
 
+
+class ShowsCard(WebElement):
+    imgShowBanner = Find(by=By.CLASS_NAME, value='media-banner')
+    txtTitle = Find(by=By.CLASS_NAME, value='asset-title')
+
+
 class FeaturedPage(CBCWebBase):
+
+    shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
     btnCarouselButtons = Finds(by=By.CLASS_NAME, value='carousel-control')
     btnPlayPauseCarousel = Find(by=By.CLASS_NAME, value='carousel-play-pause')
     txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')

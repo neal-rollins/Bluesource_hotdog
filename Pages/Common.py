@@ -5,8 +5,15 @@ from Helpers.BasePage import CBCWebBase
 from selenium.webdriver.remote.webelement import WebElement
 
 
+class Footer(WebElement):
+    linkTermsOfUse = Find(by=By.LINK_TEXT, value='Terms of Use')
+    linkPrivacyPolicy = Find(by=By.LINK_TEXT, value='Privacy Policy')
+    linkReusePermission = Find(by=By.LINK_TEXT, value='Reuse & Permission')
+    linkHelp = Find(by=By.LINK_TEXT, value='Help')
+    imgFooterLogo = Find(by=By.CSS_SELECTOR, value='.client-logo-footer')
+    txtCopywrite = Find(by=By.CSS_SELECTOR, value='.footer-client-attr > p')
+
 class NavBar(WebElement):
-    btnHome = Find(by=By.CLASS_NAME, value='client-logo-nav')
     btnShows = Find(by=By.LINK_TEXT, value='SHOWS')
     btnFeatured = Find(by=By.LINK_TEXT, value='FEATURED')
     btnDocumentaries = Find(by=By.LINK_TEXT, value='DOCUMENTARIES')
@@ -15,6 +22,8 @@ class NavBar(WebElement):
 
 class CommonPage(CBCWebBase):
     navbar = Find(ui_type=NavBar, by=By.CLASS_NAME, value='nav-menu')
+    footer = Find(Footer, by=By.CLASS_NAME, value='footer-section')
+    btnHome = Find(by=By.CLASS_NAME, value='client-logo-nav')
     genreDropdown = Find(by=By.CLASS_NAME, value='controls-label')
     loadingContainer = Find(by=By.CLASS_NAME, value='loading-container')
     loadingIndicator = Find(by=By.CLASS_NAME, value='loading-indicator loading')
