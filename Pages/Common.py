@@ -1,3 +1,5 @@
+from time import sleep
+
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -35,6 +37,9 @@ class CommonPage(CBCWebBase):
     btnCarouselDots = Finds(by=By.CLASS_NAME, value='carousel-dot')
     btnPlayPauseCarousel = Find(by=By.CLASS_NAME, value='carousel-play-pause')
     txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def navigateToSection(self, SectionName):
         section = SectionName.lower()

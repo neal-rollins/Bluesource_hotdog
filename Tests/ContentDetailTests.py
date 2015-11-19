@@ -1,4 +1,5 @@
 from time import sleep
+import webium
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
 from Pages.ContentDetailPage import ContentDetailPage
@@ -9,6 +10,7 @@ from Pages.ShowsPage import ShowsPage
 class ContentDetailsTest(BaseTest):
 
     def test_contentDetailsElements(self):
+
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
@@ -40,6 +42,7 @@ class ContentDetailsTest(BaseTest):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
+
         common.navigateToSection('SHOWS')
 
         #Navigate to all shows and select show

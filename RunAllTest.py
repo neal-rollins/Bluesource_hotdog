@@ -23,9 +23,8 @@ def run_all_test(device=None):
     runner.run(tests)
 
 threads =[]
-for device in DeviceSelector(True).getDevice():
+for device in DeviceSelector(True, platform='desktop').getDevice():
     t = threading.Thread(target=run_all_test, args=[device])
     threads.append(t)
-
     t.start()
 
