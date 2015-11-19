@@ -39,7 +39,7 @@ class FeaturedPageTests(BaseTest):
         self.assertEqual(common.footer.txtCopywrite.text, '©2015 CBC/Radio-Canada. All rights reserved')
 
     def test_featuredPageElements(self):
-        #Open App and Navigate to Shows
+        #Open App
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
 
