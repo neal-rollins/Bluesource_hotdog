@@ -3,7 +3,7 @@ from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
 from Helpers.BasePage import CBCWebBase
 from selenium.webdriver.remote.webelement import WebElement
-
+from time import sleep
 
 class Footer(WebElement):
     linkTermsOfUse = Find(by=By.LINK_TEXT, value='Terms of Use')
@@ -31,6 +31,11 @@ class CommonPage(CBCWebBase):
     carousel = Find(by=By.CLASS_NAME, value='carousel')
     carouselDots = Find(by=By.CLASS_NAME, value='carousel-dots')
 
+    btnActiveCarouselDot = Find(by=By.CLASS_NAME, value='carousel-dot-active')
+    btnCarouselDots = Finds(by=By.CLASS_NAME, value='carousel-dot')
+    btnPlayPauseCarousel = Find(by=By.CLASS_NAME, value='carousel-play-pause')
+    txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
+
     def navigateToSection(self, SectionName):
         section = SectionName.lower()
         if section.lower() == 'home':
@@ -56,9 +61,39 @@ class CommonPage(CBCWebBase):
         loweredText = dropdownText.lower()
         assert loweredText == 'genre', 'The Genre Dropdown Could Not Be Found'
 
+    def getCurrentCarouselTitle(self):
+        tagline = self.txtCarouselTagline.text
+        return tagline
 
-    def assertTwoThingsEqual(self, thing1, thing2):
-        assert thing1 == thing2, 'Expected Equal Values. Instead [%s] and [%s] were found' % (thing1, thing2)
+    def pauseCarousel(self):
+        self.btnPlayPauseCarousel.click()
+        sleep(1)
 
-    def assertTwoThingsNotEqual(self, thing1, thing2):
-        assert thing1 != thing2, 'Expected Different Values. Instead [%s] and [%s] were found' % (thing1, thing2)
+    def testCarousel(self):
+        carouselInfo = str(self.btnActiveCarouselDot.text)
+        splitNumbers = carouselInfo.split()
+        firstArrayNumber = splitNumbers[1]
+        finalArrayNumber = splitNumbers[3]
+        firstNumber = int(firstArrayNumber)
+        finalNumber = int(finalArrayNumber) - 1
+
+        number = firstNumber
+        for item in range(finalNumber):
+            currentCarouselTitle = self.getCurrentCarouselTitle()
+            self.btnCarouselDots[number].click()
+            #Put a pause between switches or else chrome tests will fail
+            sleep(2)
+            newCarouselTitle = self.getCurrentCarouselTitle()
+            assert currentCarouselTitle != newCarouselTitle, 'Expected Different Values. Instead (%s) and (%s) were found' % (currentCarouselTitle, newCarouselTitle)
+            number += 1
+
+        number = finalNumber -  1
+        for items in range(finalNumber):
+            currentCarouselTitle = self.getCurrentCarouselTitle()
+            self.btnCarouselDots[number].click()
+            #Put a pause between switches or else chrome tests will fail
+            sleep(2)
+            newCarouselTitle = self.getCurrentCarouselTitle()
+            assert currentCarouselTitle != newCarouselTitle, 'Expected Different Values. Instead (%s) and (%s) were found' % (currentCarouselTitle, newCarouselTitle)
+            number -= 1
+

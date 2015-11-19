@@ -1,11 +1,11 @@
 import os
+from Helpers.FilePath import get_full_path
+os.environ['PROJECTFOLDER'] = get_full_path('')
 import builtins
 import threading
 from appium_selector.DeviceSelector import DeviceSelector
-from Helpers.FilePath import get_full_path
 
 
-os.environ['PROJECTFOLDER'] = get_full_path('')
 from hotdog.BaseTest import HotDogBaseTest
 
 class BaseTest(HotDogBaseTest):

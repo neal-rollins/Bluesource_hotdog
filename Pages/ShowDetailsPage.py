@@ -7,6 +7,7 @@ from hotdog.FindEither import FindEither
 from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
 from selenium.webdriver.remote.webelement import WebElement
+from time import sleep
 
 class EpisodeDetail(WebElement):
     imgShowImage = Find(by=By.CLASS_NAME, value='media-image')
@@ -17,13 +18,13 @@ class EpisodeDetail(WebElement):
 
 class ShowDetailsPage(CBCWebBase):
     txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')
+    txtActiveSeason = Find(by=By.CLASS_NAME, value='active')
     listEpisodes = Finds(EpisodeDetail, by=By.CSS_SELECTOR, value='figure.media-card')
     imgHero = Find(by=By.CLASS_NAME, value='media-hero')
     imgAd = Find(by=By.ID, value='showAd')
 
 
     def clickOnEpisode(self, title=None, index=0, random=False):
-
         if random:
             episode = rand.choice(self.listEpisodes)
             episodeTitle = episode.txtEpisodeTitle.text
@@ -45,31 +46,69 @@ class ShowDetailsPage(CBCWebBase):
         return episodeTitle
 
     def getCurrentSeason(self):
-        season = Find(context=self, by=By.CLASS_NAME, value='active')
-        season.text
-        print(season.text)
-        return season.text
+        season = self._driver.find_elements_by_id('selected')
+        season[0].click()
+        print(season)
 
     def goToPreviousSeason(self):
-        #Get Season and Season Number
-        currentSeasonInfo = self.currentSeason.text
+        #Instantiates the Variables
+        i = 0
+        listOfSeasons = []
 
-        #Break The Number Apart from the Text
-        seasonArray = currentSeasonInfo.split(' ')
-        print(seasonArray[0])
-        print(seasonArray[1])
-        currentSeasonNumber = int(seasonArray[1])
+        #Finds the Season Name as it is in a list of Elements
+        activeSeasonSearch = self.driver.find_elements_by_class_name('active')
 
-        #Subtract 1 From the Season Number, Making Sure It Isn't 0
-        previousSesaonNumber = int(currentSeasonNumber) - 1
-        assert (previousSesaonNumber > 0), 'There Is Only One Season. A Previous Season Could Not Be Found.'
+        #Takes the Names of the Found Elements and Puts Them in An Array
+        for season in range(len(activeSeasonSearch)):
+            listOfSeasons.insert(i, activeSeasonSearch[i].text)
+            i += 1
 
-        #Add in the Word Season so the Combined String Can Be Found
-        previousSeason = 'Season ' + str(previousSesaonNumber)
-        return previousSeason
+        #Splits the Season and Its Number Out
+        currentSeason = listOfSeasons[2].split()
+        currentSeasonNumber = int(currentSeason[1])
+        assert currentSeasonNumber > 1, 'There is only One Season Present. A Previous Season Can Not Be Navigated To.'
+        previousSeasonNumber = currentSeasonNumber - 1
 
+        #Searches for the Previous Season and Clicks on It
+        seasonToFind = 'SEASON ' + str(previousSeasonNumber)
+        Find(context=self, by=By.PARTIAL_LINK_TEXT, value=seasonToFind).click()
 
+    def goToNextSeason(self):
+        #Instantiates the Variables
+        i = 0
+        listOfSeasons = []
 
+        #Finds the Season Name as it is in a list of Elements
+        activeSeasonSearch = self.driver.find_elements_by_class_name('active')
 
+        #Takes the Names of the Found Elements and Puts Them in An Array
+        for season in range(len(activeSeasonSearch)):
+            listOfSeasons.insert(i, activeSeasonSearch[i].text)
+            i += 1
 
+        #Splits the Season and Its Number Out
+        currentSeason = listOfSeasons[2].split()
+        currentSeasonNumber = int(currentSeason[1])
+        previousSeasonNumber = currentSeasonNumber + 1
 
+        #Searches for the Previous Season and Clicks on It
+        seasonToFind = 'SEASON ' + str(previousSeasonNumber)
+        Find(context=self, by=By.PARTIAL_LINK_TEXT, value=seasonToFind).click()
+
+    def verifyOnSeason(self, seasonNumber):
+        i = 0
+        listOfSeasons = []
+
+        #Finds the Season Name as it is in a list of Elements
+        activeSeasonSearch = self.driver.find_elements_by_class_name('active')
+
+        #Takes the Names of the Found Elements and Puts Them in An Array
+        for season in range(len(activeSeasonSearch)):
+            listOfSeasons.insert(i, activeSeasonSearch[i].text)
+            i += 1
+
+        #Splits the Season and Its Number Out
+        currentSeason = listOfSeasons[2].split()
+        currentSeasonNumber = int(currentSeason[1])
+
+        assert seasonNumber == currentSeasonNumber, 'Expected Value [%s]. Actual Value was [%s]' % (seasonNumber, currentSeasonNumber)

@@ -8,9 +8,12 @@ from hotdog.FindEither import FindEither
 class FeaturedPageTests(BaseTest):
 
     def test_headerElements(self):
-        #Open App and Navigate to Shows
+        #Open App
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
+
+        #Validate On Feature Page
+        self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
 
         #Validate Header Elements
         self.assert_element_exists(common.navbar.btnShows, 'Shows Button')
@@ -23,6 +26,9 @@ class FeaturedPageTests(BaseTest):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
+
+        #Validate On Feature Page
+        self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
 
         self.assert_element_exists(common.footer.linkTermsOfUse, 'Terms of Use')
         self.assert_element_exists(common.footer.linkPrivacyPolicy, 'linkPrivacyPolicy')
@@ -46,7 +52,7 @@ class FeaturedPageTests(BaseTest):
             self.assert_element_exists(show.txtTitle, 'Show Title')
 
     def test_featuredItemNavigation(self):
-        #Open App and Navigate to Shows
+        #Open App
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
 
@@ -67,3 +73,19 @@ class FeaturedPageTests(BaseTest):
 
     def test_footerLinks(self):
         assert False, 'Footer links are currently not functional'
+
+    def test_testCarousels(self):
+        #Open App
+        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common.open()
+
+        #Validate On Feature Page
+        self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+        common.pauseCarousel()
+        common.testCarousel()
+
+        #Navigate to Shows Section
+        common.navigateToSection('SHOWS')
+        self.assertIn('active', common.navbar.btnShows.get_attribute('class'), 'Shows is not active tab')
+        common.pauseCarousel()
+        common.testCarousel()

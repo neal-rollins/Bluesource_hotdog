@@ -2,6 +2,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
 from Helpers.BasePage import CBCWebBase
+from time import sleep
 
 
 class ShowsCard(WebElement):
@@ -12,19 +13,38 @@ class ShowsCard(WebElement):
 class FeaturedPage(CBCWebBase):
 
     shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
+    btnActiveCarouselDot = Find(by=By.CLASS_NAME, value='carousel-dot-active')
+    btnCarouselDots = Finds(by=By.CLASS_NAME, value='carousel-dot')
     btnCarouselButtons = Finds(by=By.CLASS_NAME, value='carousel-control')
-    btnPlayPauseCarousel = Find(by=By.CLASS_NAME, value='carousel-play-pause')
+    btnCarouselNext = Find(by=By.NAME, value='Next')
     txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
-    # txtCarouselTagline = Find(by=By.CSS_SELECTOR, value='#main-content > div > div > div > div > span > div > div > figure > figcaption > h2')
 
     def cycleThroughCarousel(self, directionToClick):
-        carouselButtons = self.btnCarouselButtons
+        carouselInfo = str(self.btnActiveCarouselDot.text)
+        splitNumbers = carouselInfo.split()
+        firstArrayNumber = splitNumbers[1]
+        finalArrayNumber = splitNumbers[3]
+        firstNumber = int(firstArrayNumber)
+        finalNumber = int(finalArrayNumber) - 1
+
+        if directionToClick == 'Right':
+            number = firstNumber
+            for item in range(finalNumber):
+                currentCarouselTitle = self.getCurrentCarouselTitle()
+                self.btnCarouselDots[number].click()
+                newCarouselTitle = self.getCurrentCarouselTitle()
+                assert currentCarouselTitle != newCarouselTitle, 'Expected Different Values. Instead (%s) and (%s) were found' % (currentCarouselTitle, newCarouselTitle)
+                number += 1
         if directionToClick == 'Left':
-            carouselButtons[0].click()
-        elif directionToClick == 'Right':
-            carouselButtons[1].click()
-        else:
-            pass
+            number = finalNumber -  1
+            for items in range(finalNumber):
+                currentCarouselTitle = self.getCurrentCarouselTitle()
+                self.btnCarouselDots[number].click()
+                newCarouselTitle = self.getCurrentCarouselTitle()
+                print('started on ' + currentCarouselTitle)
+                print('ended on ' + newCarouselTitle)
+                assert currentCarouselTitle != newCarouselTitle, 'Expected Different Values. Instead (%s) and (%s) were found' % (currentCarouselTitle, newCarouselTitle)
+                number -= 1
 
     def getCurrentCarouselTitle(self):
         tagline = self.txtCarouselTagline.text

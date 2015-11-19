@@ -1,7 +1,6 @@
 import os
 from Helpers.FilePath import get_full_path
 import unittest
-from nose.core import collector
 import threading
 import builtins
 
