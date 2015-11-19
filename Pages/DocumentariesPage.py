@@ -32,7 +32,7 @@ class DocumentariesPage(CBCWebBase):
         if title.lower() == 'all':
             self.subnav.btnAll.click()
         else:
-            raise ValueError(msg='[%s] is not a valid subsection' % title)
+            raise ValueError('[%s] is not a valid subsection' % title)
 
     def getGenreList(self):
         self.subnav.btnGenre.click()
@@ -55,7 +55,7 @@ class DocumentariesPage(CBCWebBase):
         elif genre.lower() == 'wildlife':
             self.subnav.dropdownGenre.btnWildlife.click()
         else:
-            raise ValueError(msg='[%s] is not a valid genre' % genre)
+            raise ValueError('[%s] is not a valid genre' % genre)
 
 
     def getTitles(self):

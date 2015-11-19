@@ -35,7 +35,7 @@ class ShowsPage(CBCWebBase):
         elif title.lower() == 'all':
             self.subnav.btnAll.click()
         else:
-            raise ValueError(msg='[%s] is not a valid subsection' % title)
+            raise ValueError('[%s] is not a valid subsection' % title)
 
     def getGenreList(self):
         self.subnav.btnGenre.click()

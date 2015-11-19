@@ -1,12 +1,14 @@
 import os
+from sauceclient import SauceClient
+import sys
+from Helpers.FilePath import get_full_path
+os.environ['PROJECTFOLDER'] = get_full_path('')
+
 import builtins
 import threading
 from appium_selector.DeviceSelector import DeviceSelector
-from Helpers.FilePath import get_full_path
-
-
-os.environ['PROJECTFOLDER'] = get_full_path('')
 from hotdog.BaseTest import HotDogBaseTest
+
 
 class BaseTest(HotDogBaseTest):
 
@@ -15,7 +17,10 @@ class BaseTest(HotDogBaseTest):
         if not hasattr(builtins, 'threadlocal'):
             builtins.threadlocal = threading.local()
             builtins.threadlocal.config = DeviceSelector(platform='desktop').getDevice()[0]
-    pass
+
+    def setUp(self):
+        super().setUp()
+        self.driver.implicitly_wait(30)
 
     def assertAlphabetical(self, list):
         for i in range(len(list)-1):
@@ -23,4 +28,6 @@ class BaseTest(HotDogBaseTest):
 
     def assert_element_exists(self, element, name):
         assert element.is_displayed(), 'The element [%s] was not found' % name
+
+
 
