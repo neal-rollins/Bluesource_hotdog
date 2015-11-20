@@ -1,4 +1,5 @@
 from time import sleep
+from hotdog.FindEither import FindEither
 
 __author__ = 'brian.menzies'
 from webium import Find, Finds
@@ -16,6 +17,7 @@ class Footer(WebElement):
     txtCopywrite = Find(by=By.CSS_SELECTOR, value='.footer-client-attr > p')
 
 class NavBar(WebElement):
+    btnToggle = Find(by=By.CLASS_NAME, value='toggle')
     btnShows = Find(by=By.LINK_TEXT, value='SHOWS')
     btnFeatured = Find(by=By.LINK_TEXT, value='FEATURED')
     btnDocumentaries = Find(by=By.LINK_TEXT, value='DOCUMENTARIES')
@@ -23,7 +25,8 @@ class NavBar(WebElement):
 
 
 class CommonPage(CBCWebBase):
-    navbar = Find(ui_type=NavBar, by=By.CLASS_NAME, value='nav-menu')
+    navbar = FindEither(ui_type=NavBar, selectors= [[By.CLASS_NAME, 'nav-bar'],
+                                                    [By.CLASS_NAME, 'nav-menu']])
     footer = Find(Footer, by=By.CLASS_NAME, value='footer-section')
     btnHome = Find(by=By.CLASS_NAME, value='client-logo-nav')
     genreDropdown = Find(by=By.CLASS_NAME, value='controls-label')
@@ -42,6 +45,13 @@ class CommonPage(CBCWebBase):
         super().__init__(*args, **kwargs)
 
     def navigateToSection(self, SectionName):
+        try:
+            if self.elemenent_exists(self.navbar.btnToggle):
+                if 'open' not in self.navbar.btnToggle.get_attribute('class'):
+                    self.navbar.btnToggle.click()
+                    sleep(1)
+        except:
+            pass
         section = SectionName.lower()
         if section.lower() == 'home':
             self.navbar.btnHome.click()

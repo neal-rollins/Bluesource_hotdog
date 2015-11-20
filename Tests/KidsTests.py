@@ -8,7 +8,7 @@ from Pages.KidsPage import KidsPage
 from Pages.ShowDetailsPage import ShowDetailsPage
 
 
-class KidsTest(BaseTest):
+class KidsTests(BaseTest):
 
     def test_NavigateToKids(self):
         #Launch the Web App

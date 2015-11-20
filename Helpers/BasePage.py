@@ -11,3 +11,10 @@ class CBCWebBase(HotDogBasePage):
 
     def back(self):
         self.driver.execute_script("window.history.go(-1)");
+
+    def elemenent_exists(self, element):
+        try:
+            displayed = element.is_displayed()
+            return True if displayed else False
+        except:
+            return False
