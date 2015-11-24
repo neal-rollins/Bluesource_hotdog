@@ -95,7 +95,7 @@ class ShowsTest(BaseTest):
             self.assertEqual(showTitle, showDetail.txtSeriesTitle.text, 'Loaded incorrect Show Detail page for [%s]. Actually loaded [%s]' % (showTitle, showDetail.txtSeriesTitle.text))
             showDetail.back()
 
-    def test_nagivateToContentDetailsDocumentaryGenres(self):
+    def test_nagivateToContentDetailsShowsGenres(self):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
