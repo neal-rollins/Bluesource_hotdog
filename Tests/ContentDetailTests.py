@@ -78,6 +78,7 @@ class ContentDetailsTest(BaseTest):
         #Navigate Back via breadcrumb
         contentDetail = ContentDetailPage(driver=self.driver)
         sleep(1)
+        contentDetail.assert_element_present('txtBreadcrumbs')
         breadcrumb = contentDetail.txtBreadcrumbs.text
         self.assertEqual(breadcrumb.lower(), showTitle.lower(), 'Breadcrumb does not match expected show title. Expected [%s].  Actual [%s]' % (breadcrumb, showTitle))
         contentDetail.txtBreadcrumbs.click()
