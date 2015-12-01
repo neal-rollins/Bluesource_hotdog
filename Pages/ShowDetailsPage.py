@@ -1,3 +1,4 @@
+import webium
 from selenium.webdriver.remote.webelement import WebElement
 import random as rand
 __author__ = 'brian.menzies'
@@ -22,7 +23,6 @@ class ShowDetailsPage(CBCWebBase):
     listEpisodes = Finds(EpisodeDetail, by=By.CSS_SELECTOR, value='figure.media-card')
     imgHero = Find(by=By.CLASS_NAME, value='media-hero')
     imgAd = Find(by=By.ID, value='showAd')
-
 
     def clickOnEpisode(self, title=None, index=0, random=False):
         if random:
@@ -112,3 +112,8 @@ class ShowDetailsPage(CBCWebBase):
         currentSeasonNumber = int(currentSeason[1])
 
         assert seasonNumber == currentSeasonNumber, 'Expected Value [%s]. Actual Value was [%s]' % (seasonNumber, currentSeasonNumber)
+
+    def sync(self, title, timeout=20):
+        self.driver.implicitly_wait(timeout)
+        Find(by=By.XPATH, value="//h1[contains(@class, 'series-title') and text() = '%s']" % title, context=self)
+        self.driver.implicitly_wait(webium.settings.implicit_timeout)

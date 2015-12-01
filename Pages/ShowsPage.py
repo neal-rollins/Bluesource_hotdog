@@ -28,6 +28,7 @@ class ShowsCard(WebElement):
 class ShowsPage(CBCWebBase):
     subnav = Find(SubNav, by=By.CLASS_NAME, value='menu-bar')
     shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
+    syncElement =  (By.CSS_SELECTOR, '.selected[href="/shows/"]')
 
     def navigateSubNav(self, title):
         if title.lower() == 'new releases':

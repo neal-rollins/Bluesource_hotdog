@@ -18,6 +18,7 @@ class FeaturedPage(CBCWebBase):
     btnCarouselButtons = Finds(by=By.CLASS_NAME, value='carousel-control')
     btnCarouselNext = Find(by=By.NAME, value='Next')
     txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
+    syncElement =  (By.CSS_SELECTOR, '.selected[href="/"]')
 
     def cycleThroughCarousel(self, directionToClick):
         carouselInfo = str(self.btnActiveCarouselDot.text)

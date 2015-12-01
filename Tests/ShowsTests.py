@@ -87,8 +87,8 @@ class ShowsTest(BaseTest):
 
         #Validate Random Shows
         for i in range(5):
-            sleep(1)
             shows = ShowsPage(driver=self.driver)
+            shows.sync()
             showTitle = shows.clickOnShow(random=True)
             showDetail = ShowDetailsPage(driver=self.driver)
             showDetail.assert_element_present('txtSeriesTitle', timeout=5)
@@ -107,8 +107,8 @@ class ShowsTest(BaseTest):
 
         #Validate Random Shows with Random Genre
         for i in range(5):
-            sleep(1)
             shows = ShowsPage(driver=self.driver)
+            shows.sync()
 
             #Select Random Genre
             shows.navigateGenreDropdown(random.choice(genreList))

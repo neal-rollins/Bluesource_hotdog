@@ -58,8 +58,8 @@ class DocumentaryTest(BaseTest):
 
         #Validate Random Shows
         for i in range(5):
-            sleep(1)
             docs = DocumentariesPage(driver=self.driver)
+            docs.sync()
             showTitle = docs.clickOnShow(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
             contentDetail.assert_element_present('txtEpisodeTitle', timeout=5)
@@ -79,8 +79,8 @@ class DocumentaryTest(BaseTest):
 
         #Validate Random Shows with Random Genre
         for i in range(5):
-            sleep(1)
             docs = DocumentariesPage(driver=self.driver)
+            docs.sync()
 
             #Select Random Genre
             docs.navigateGenreDropdown(random.choice(genreList))

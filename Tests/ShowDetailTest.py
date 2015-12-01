@@ -46,7 +46,9 @@ class ShowDetailsTest(BaseTest):
         #Validate Content Detail Loads
         sleep(1)
         for x in range(5):
+
             showDetail = ShowDetailsPage(driver=self.driver)
+            showDetail.sync(showTitle)
             episodeTitle = showDetail.clickOnEpisode(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
             self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
