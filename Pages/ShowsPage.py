@@ -16,7 +16,7 @@ class GenreDropdown(WebElement):
 class SubNav(WebElement):
     btnNewReleases = Find(by=By.LINK_TEXT, value='NEW RELEASES')
     btnAll = Find(by=By.LINK_TEXT, value='ALL')
-    btnGenre = Find(by=By.CLASS_NAME, value='dropdown')
+    btnGenre = Find(by=By.CSS_SELECTOR, value='.dropdown .controls')
     dropdownGenre = Find(GenreDropdown, by=By.CLASS_NAME, value='menu')
 
 
@@ -39,7 +39,7 @@ class ShowsPage(CBCWebBase):
             raise ValueError('[%s] is not a valid subsection' % title)
 
     def getGenreList(self):
-        self.subnav.btnGenre.click()
+        self.driver.execute_script("arguments[0].click()", self.subnav.btnGenre)
         sleep(1)
         genrelist = []
         for genre in self.subnav.dropdownGenre.listDropdownOptions:

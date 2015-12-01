@@ -62,10 +62,10 @@ class ShowsTest(BaseTest):
         #Navigate to all shows
         shows = ShowsPage(driver=self.driver)
         sleep(2)
-        shows.subnav.btnGenre.click()
+
         genreList = shows.getGenreList()
         self.assertAlphabetical(genreList)
-        shows.subnav.btnGenre.click()
+
         genres = expectedGenres
         self.assertGreater(len(genreList), 0, 'No Genres Found for Shows')
         #self.assertEqual(len(genreList), len(genres), 'Unexpected number of genres found.  Expected [%s]. Actual [%s]' % (len(genres), len(genreList)))

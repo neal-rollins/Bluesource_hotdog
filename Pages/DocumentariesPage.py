@@ -1,4 +1,6 @@
 from time import sleep
+
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
@@ -15,7 +17,7 @@ class GenreDropdown(WebElement):
 
 class SubNav(WebElement):
     btnAll = Find(by=By.LINK_TEXT, value='ALL')
-    btnGenre = Find(by=By.CLASS_NAME, value='dropdown')
+    btnGenre = Find(by=By.CSS_SELECTOR, value='.dropdown .controls')
     dropdownGenre = Find(GenreDropdown, by=By.CLASS_NAME, value='menu')
 
 
@@ -36,7 +38,7 @@ class DocumentariesPage(CBCWebBase):
             raise ValueError('[%s] is not a valid subsection' % title)
 
     def getGenreList(self):
-        self.subnav.btnGenre.click()
+        self.driver.execute_script("arguments[0].click()", self.subnav.btnGenre)
         sleep(1)
         genrelist = []
         for genre in self.subnav.dropdownGenre.listDropdownOptions:
