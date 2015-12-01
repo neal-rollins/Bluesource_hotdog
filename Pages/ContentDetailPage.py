@@ -36,17 +36,18 @@ class ContentDetailPage(CBCWebBase):
     def verifyVideoHasPlayed(self, timeAtStart, timeAtEnd):
         assert timeAtEnd > timeAtStart, 'Expected [%s] to be greater than [%s]' % (timeAtEnd, timeAtStart)
 
-    def playVideo(self, loadTime=10, playTime=10):
+    def playVideo(self, loadTime=10, adTime = 30, playTime=10):
         self.btnPlay.click()
         sleep(loadTime)
+        sleep(adTime)
         self.videoPlayer.click()
         startTime = self.getTimeStamp()
+        assert (startTime < 30), 'Expected Time on Video to be less than 30 seconds. Instead it was at [%s] seconds' % startTime
         self.videoPlayer.click()
         sleep(playTime)
         self.videoPlayer.click()
         endTime = self.getTimeStamp()
         self.verifyVideoHasPlayed(startTime, endTime)
-
 
 
 

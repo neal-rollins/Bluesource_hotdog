@@ -38,11 +38,9 @@ class ContentDetailsTest(BaseTest):
         contentDetail.assert_element_present('txtCredits')
 
     def test_contentPlays(self):
-
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
-
         common.navigateToSection('SHOWS')
 
         #Navigate to all shows and select show
@@ -57,7 +55,7 @@ class ContentDetailsTest(BaseTest):
 
         #Validate Content Plays
         contentDetail = ContentDetailPage(driver=self.driver)
-        contentDetail.playVideo()
+        contentDetail.playVideo(loadTime=5, adTime=30)
 
     def test_navigateBreadcrumb(self):
         #Open App and Navigate to Shows
