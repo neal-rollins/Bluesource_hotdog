@@ -42,7 +42,7 @@ class ShowsTest(BaseTest):
         shows = ShowsPage(driver=self.driver)
         shows.subnav.btnAll.click()
 
-        #Assert All Shows Are in Alphabetical Order
+        #Assert All Shows Are in Alphabetical Order and that Each Show has a Banner and a Title
         sleep(1)
         showTitles = shows.getTitles()
         self.assertGreater(len(showTitles), 0, 'No Shows found on shows page')

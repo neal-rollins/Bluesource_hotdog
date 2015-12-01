@@ -15,10 +15,10 @@ class KidsTests(BaseTest):
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
         common.open()
 
-        #Web App is Launched, Navigate to Shows Section
+        #Web App is Launched, Navigate to Kids Section
         common.navigateToSection('Kids')
 
-        #Validate elements of Shows page
+        #Validate elements of Kids page
         kids = KidsPage(driver=self.driver)
         self.assert_element_exists(kids.subnav.btnAll, 'All Documentaries Button')
         self.assertIn('active', kids.subnav.btnAll.get_attribute('class'), 'All not active tab')

@@ -13,10 +13,10 @@ class DocumentaryTest(BaseTest):
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
         common.open()
 
-        #Web App is Launched, Navigate to Shows Section
+        #Web App is Launched, Navigate to Documentaries Section
         common.navigateToSection('Documentaries')
 
-        #Validate elements of Shows page
+        #Validate elements of Documentaries page
         docs = DocumentariesPage(driver=self.driver)
         self.assert_element_exists(docs.subnav.btnAll, 'All Documentaries Button')
         self.assert_element_exists(docs.subnav.btnGenre, 'Documentaries Genre Button')
@@ -29,12 +29,12 @@ class DocumentaryTest(BaseTest):
 
     def test_navigateToDocumentariesGenres(self):
 
-        #Open App and Navigate to Shows
+        #Open App and Navigate to Documentaries
         common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
         common.open()
         common.navigateToSection('DOCUMENTARIES')
 
-        #Navigate to all shows
+        #Navigate to all Documentaries
         docs = DocumentariesPage(driver=self.driver)
         genreList = docs.getGenreList()
         genres = ['Biography', 'Health', 'Science & Technology', 'Wildlife']
@@ -56,7 +56,7 @@ class DocumentaryTest(BaseTest):
         common.open()
         common.navigateToSection('DOCUMENTARIES')
 
-        #Validate Random Shows
+        #Validate Random Documentary Episode
         for i in range(5):
             docs = DocumentariesPage(driver=self.driver)
             docs.sync()
@@ -86,7 +86,7 @@ class DocumentaryTest(BaseTest):
             docs.navigateGenreDropdown(random.choice(genreList))
             sleep(1)
 
-            #Select Random Show
+            #Select Random Documentary
             showTitle = docs.clickOnShow(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
             contentDetail.assert_element_present('txtEpisodeTitle', timeout=5)
