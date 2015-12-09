@@ -5,12 +5,12 @@ import webium
 from selenium.webdriver.common.by import By
 from webium import Find
 
-webium.settings.implicit_timeout = 30
+webium.settings.implicit_timeout = 60
 
 class CBCWebBase(HotDogBasePage):
 
     def __init__(self, *args, **kwargs):
-        webium.settings.implicit_timeout = 30
+        webium.settings.implicit_timeout = 60
         super().__init__(*args, **kwargs)
 
     def back(self):
@@ -30,3 +30,7 @@ class CBCWebBase(HotDogBasePage):
         else:
             sleep(5)
         self.driver.implicitly_wait(webium.settings.implicit_timeout)
+        sleep(3)
+
+    def assert_element_exists(self, element, name):
+        assert self.elemenent_exists(element), 'Element [%s] not found' % name

@@ -10,14 +10,14 @@ class ShowDetailsTest(BaseTest):
 
     def test_showDetailsElements(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
         #Navigate to all shows
         sleep(1)
         shows = ShowsPage(driver=self.driver)
-        showTitle = shows.clickOnShow(title='Doc Zone')
+        showTitle = shows.clickOnShow(random=True)
 
         #Validate Show Detail Elements
         sleep(1)
@@ -34,7 +34,7 @@ class ShowDetailsTest(BaseTest):
 
     def test_navigateContentDetail(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
@@ -45,26 +45,52 @@ class ShowDetailsTest(BaseTest):
 
         #Validate Content Detail Loads
         sleep(1)
-        for x in range(5):
+        for x in range(1):
 
             showDetail = ShowDetailsPage(driver=self.driver)
             showDetail.sync(showTitle)
+            sleep(3)
+
             episodeTitle = showDetail.clickOnEpisode(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
             self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
             contentDetail.back()
 
     def test_NavigatingThroughSeasons(self):
-        #Open App and Naviaget to Blackstone Show
-        common = CommonPage(driver=self.driver , url='http://project-igloo.maple.willowtreemobile.com/blackstone/season-2/9044f2f1-f9d9-43c7-8b8e-6eb8ee1f7044')
+        #Open App and Navigate to Shows
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
+        common.navigateToSection('SHOWS')
         self.driver.maximize_window()
+
+        #Navigate to all shows and select show
         sleep(1)
+        shows = ShowsPage(driver=self.driver)
+        showTitle = shows.clickOnShow(title='Blackstone')
+
+        #Verify Elements Season 2
+        showDetail = ShowDetailsPage(driver=self.driver)
+        for episode in showDetail.listEpisodes:
+            showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
+            showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")
+            showDetail.assert_element_exists(episode.txtEpisodeTitle, "Episode Title")
+            showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
+            showDetail.assert_element_exists(episode.txtEpisodeNumber, "Episode Number")
+            showDetail.assert_element_exists(episode.txtDuration, "Episode Duration")
 
         #Go To Previous Season, Verify on That Season
-        showDetail = ShowDetailsPage(driver=self.driver)
         showDetail.goToPreviousSeason()
         showDetail.verifyOnSeason(1)
+
+        #Verify Elements Season 1
+        showDetail = ShowDetailsPage(driver=self.driver)
+        for episode in showDetail.listEpisodes:
+            showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
+            showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")
+            showDetail.assert_element_exists(episode.txtEpisodeTitle, "Episode Title")
+            showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
+            showDetail.assert_element_exists(episode.txtEpisodeNumber, "Episode Number")
+            showDetail.assert_element_exists(episode.txtDuration, "Episode Duration")
 
         #Click a Random Episode then Return Back
         episodeTitle = showDetail.clickOnEpisode(random=True)

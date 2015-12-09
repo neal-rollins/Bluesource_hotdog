@@ -16,6 +16,8 @@ class EpisodeDetail(WebElement):
     txtEpisodeTitle = FindEither(selectors=[[By.CLASS_NAME, 'episode-title'],
                                   [By.CLASS_NAME, 'asset-title']])
     txtEpisodeDescription = Find(by=By.CLASS_NAME, value='description')
+    txtEpisodeNumber = Find(by=By.CLASS_NAME, value='episode-number-short')
+    txtDuration = Find(by=By.CSS_SELECTOR, value="li[aria-label~='Duration:']")
 
 class ShowDetailsPage(CBCWebBase):
     txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')

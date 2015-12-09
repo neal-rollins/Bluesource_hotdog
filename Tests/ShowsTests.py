@@ -5,14 +5,13 @@ from Pages.Common import CommonPage
 from Pages.ShowDetailsPage import ShowDetailsPage
 from Pages.ShowsPage import ShowsPage
 
-
 expectedGenres = ['News & Current Affairs', 'Comedy', 'Documentary', 'Drama']
 
 class ShowsTest(BaseTest):
 
     def test_NavigateToShows(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
         #Web App is Launched, Navigate to Shows Section
@@ -34,7 +33,7 @@ class ShowsTest(BaseTest):
 
     def test_navigateAllShows(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
@@ -55,7 +54,7 @@ class ShowsTest(BaseTest):
     def test_navigateToShowGenres(self):
 
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
@@ -81,14 +80,15 @@ class ShowsTest(BaseTest):
 
     def test_nagivateToShowDetails(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
         #Validate Random Shows
-        for i in range(5):
+        for i in range(1):
             shows = ShowsPage(driver=self.driver)
             shows.sync()
+            sleep(1)
             showTitle = shows.clickOnShow(random=True)
             showDetail = ShowDetailsPage(driver=self.driver)
             showDetail.assert_element_present('txtSeriesTitle', timeout=5)
@@ -97,7 +97,7 @@ class ShowsTest(BaseTest):
 
     def test_nagivateToContentDetailsShowsGenres(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
 
@@ -106,7 +106,7 @@ class ShowsTest(BaseTest):
         genreList = expectedGenres
 
         #Validate Random Shows with Random Genre
-        for i in range(5):
+        for i in range(1):
             shows = ShowsPage(driver=self.driver)
             shows.sync()
 

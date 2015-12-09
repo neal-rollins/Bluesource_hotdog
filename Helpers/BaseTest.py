@@ -1,4 +1,6 @@
 import os
+
+from hotdog.Config import GetConfig
 from sauceclient import SauceClient
 import sys
 from Helpers.FilePath import get_full_path
@@ -11,6 +13,8 @@ from hotdog.BaseTest import HotDogBaseTest
 
 
 class BaseTest(HotDogBaseTest):
+
+    page_url = GetConfig('APP_URL')
 
     @classmethod
     def setUpClass(cls):

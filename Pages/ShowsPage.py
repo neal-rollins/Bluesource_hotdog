@@ -49,16 +49,10 @@ class ShowsPage(CBCWebBase):
 
     def navigateGenreDropdown(self, genre):
         self.subnav.btnGenre.click()
-
-        if genre.lower() == 'news & current affairs':
-            self.subnav.dropdownGenre.btnNewsCurrentAffairs.click()
-        elif genre.lower() == 'comedy':
-            self.subnav.dropdownGenre.btnComedy.click()
-        elif genre.lower() == 'documentary':
-            self.subnav.dropdownGenre.btnDocumentary.click()
-        elif genre.lower() == 'drama':
-            self.subnav.dropdownGenre.btnDrama.click()
-        else:
+        try:
+            optGenre = Find(by=By.LINK_TEXT, value=genre.upper(), context=self.subnav.dropdownGenre)
+            optGenre.click()
+        except:
             raise ValueError('[%s] is not a valid genre' % genre)
 
 
@@ -75,11 +69,11 @@ class ShowsPage(CBCWebBase):
             show = rand.choice(self.shows)
             showTitle = show.txtTitle.text
             show.imgShowBanner.click()
-        elif title:
+        elif title is not None:
             found = False
             for show in self.shows:
-                if show.txtTitle.text.lower() == title.lower():
-                    showTitle = show.txtTitle.text
+                showTitle = show.txtTitle.text
+                if showTitle.lower() == title.lower():
                     show.imgShowBanner.click()
                     found = True
                     break

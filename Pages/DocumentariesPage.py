@@ -48,16 +48,10 @@ class DocumentariesPage(CBCWebBase):
 
     def navigateGenreDropdown(self, genre):
         self.subnav.btnGenre.click()
-
-        if genre.lower() == 'biography':
-            self.subnav.dropdownGenre.btnBiography.click()
-        elif genre.lower() == 'health':
-            self.subnav.dropdownGenre.btnHealth.click()
-        elif genre.lower() == 'science & technology':
-            self.subnav.dropdownGenre.btnScienceTech.click()
-        elif genre.lower() == 'wildlife':
-            self.subnav.dropdownGenre.btnWildlife.click()
-        else:
+        try:
+            optGenre = Find(by=By.LINK_TEXT, value=genre.upper(), context=self.subnav.dropdownGenre)
+            optGenre.click()
+        except:
             raise ValueError('[%s] is not a valid genre' % genre)
 
 

@@ -10,7 +10,7 @@ class DocumentaryTest(BaseTest):
 
     def test_NavigateToDocumentaries(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
         #Web App is Launched, Navigate to Documentaries Section
@@ -30,7 +30,7 @@ class DocumentaryTest(BaseTest):
     def test_navigateToDocumentariesGenres(self):
 
         #Open App and Navigate to Documentaries
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('DOCUMENTARIES')
 
@@ -52,12 +52,12 @@ class DocumentaryTest(BaseTest):
 
     def test_nagivateToContentDetailsDocumentary(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('DOCUMENTARIES')
 
         #Validate Random Documentary Episode
-        for i in range(5):
+        for i in range(1):
             docs = DocumentariesPage(driver=self.driver)
             docs.sync()
             showTitle = docs.clickOnShow(random=True)
@@ -69,7 +69,7 @@ class DocumentaryTest(BaseTest):
 
     def test_nagivateToContentDetailsDocumentaryGenres(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('DOCUMENTARIES')
 
@@ -78,7 +78,7 @@ class DocumentaryTest(BaseTest):
         genreList = docs.getGenreList()
 
         #Validate Random Shows with Random Genre
-        for i in range(5):
+        for i in range(1):
             docs = DocumentariesPage(driver=self.driver)
             docs.sync()
 

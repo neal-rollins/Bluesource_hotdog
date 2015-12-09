@@ -9,7 +9,7 @@ from Helpers.BasePage import CBCWebBase
 
 class ContentDetailPage(CBCWebBase):
 
-    txtBreadcrumbs = Find(by=By.CSS_SELECTOR, value='.breadcrumbs a')
+    txtBreadcrumbs = Find(by=By.CSS_SELECTOR, value='h2.series-name')
     btnPlay = Find(by=By.CLASS_NAME, value='play-icon')
     videoPlayer = Find(by=By.ID, value='jwplayer')
     imgAd = Find(by=By.CLASS_NAME, value='ad-wrapper')

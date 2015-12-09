@@ -102,7 +102,7 @@ class CommonPage(CBCWebBase):
             assert currentCarouselTitle != newCarouselTitle, 'Expected Different Values. Instead (%s) and (%s) were found' % (currentCarouselTitle, newCarouselTitle)
             number += 1
 
-        number = finalNumber -  1
+        number = finalNumber - 1
         for items in range(finalNumber):
             currentCarouselTitle = self.getCurrentCarouselTitle()
             self.btnCarouselDots[number].click()

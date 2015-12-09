@@ -12,7 +12,7 @@ class KidsTests(BaseTest):
 
     def test_NavigateToKids(self):
         #Launch the Web App
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com/')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
         #Web App is Launched, Navigate to Kids Section
@@ -22,20 +22,21 @@ class KidsTests(BaseTest):
         kids = KidsPage(driver=self.driver)
         self.assert_element_exists(kids.subnav.btnAll, 'All Documentaries Button')
         self.assertIn('active', kids.subnav.btnAll.get_attribute('class'), 'All not active tab')
-        self.assertGreater(len(kids.getTitles()), 0, 'No Shows found on shows page')
-        self.assertAlphabetical(kids.getTitles())
+        titles = kids.getTitles()
+        self.assertGreater(len(titles), 0, 'No Shows found on shows page')
+        self.assertAlphabetical(titles)
         for show in kids.shows:
             self.assert_element_exists(show.imgShowBanner, 'Show Image')
             self.assert_element_exists(show.txtTitle, 'Show Title')
 
     def test_nagivateToShowDetailsKids(self):
         #Open App and Navigate to Shows
-        common = CommonPage(driver=self.driver, url='http://project-igloo.maple.willowtreemobile.com')
+        common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('KIDS')
 
         #Validate Random Shows
-        for i in range(5):
+        for i in range(1):
             Kids = KidsPage(driver=self.driver)
             Kids.sync()
 

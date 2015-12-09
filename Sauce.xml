@@ -43,6 +43,20 @@
 
     <node>
         <platform>web</platform>
+        <platformName>Mac OS X 10.11</platformName>
+        <browserName>chrome</browserName>
+        <version>45</version>
+    </node>
+
+    <node>
+        <platform>web</platform>
+        <platformName>Mac OS X 10.11</platformName>
+        <browserName>chrome</browserName>
+        <version>46</version>
+    </node>
+
+    <node>
+        <platform>web</platform>
         <platformName>Windows 8.1</platformName>
         <browserName>internet explorer</browserName>
         <version>11</version>
