@@ -1,8 +1,6 @@
 import os
 
 from hotdog.Config import GetConfig
-from sauceclient import SauceClient
-import sys
 from Helpers.FilePath import get_full_path
 os.environ['PROJECTFOLDER'] = get_full_path('')
 

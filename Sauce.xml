@@ -29,9 +29,23 @@
 
     <node>
         <platform>web</platform>
+        <platformName>Mac OS X 10.11</platformName>
+        <browserName>firefox</browserName>
+        <version>41</version>
+    </node>
+
+    <node>
+        <platform>web</platform>
+        <platformName>Mac OS X 10.11</platformName>
+        <browserName>firefox</browserName>
+        <version>42</version>
+    </node>
+
+    <node>
+        <platform>web</platform>
         <platformName>Windows 8.1</platformName>
         <browserName>chrome</browserName>
-        <version>45</version>
+        <version>47</version>
     </node>
 
     <node>
@@ -45,7 +59,7 @@
         <platform>web</platform>
         <platformName>Mac OS X 10.11</platformName>
         <browserName>chrome</browserName>
-        <version>45</version>
+        <version>47</version>
     </node>
 
     <node>

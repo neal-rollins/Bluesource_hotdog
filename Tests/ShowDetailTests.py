@@ -41,7 +41,7 @@ class ShowDetailsTest(BaseTest):
         #Navigate to all shows
         sleep(1)
         shows = ShowsPage(driver=self.driver)
-        showTitle = shows.clickOnShow(title='Doc Zone')
+        showTitle = shows.clickOnShow(random=True)
 
         #Validate Content Detail Loads
         sleep(1)

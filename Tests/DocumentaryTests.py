@@ -37,10 +37,8 @@ class DocumentaryTest(BaseTest):
         #Navigate to all Documentaries
         docs = DocumentariesPage(driver=self.driver)
         genreList = docs.getGenreList()
-        genres = ['Biography', 'Health', 'Science & Technology', 'Wildlife']
-        #self.assertEqual(len(genreList), len(genres), 'Unexpected number of genres found. Expected [%s].  Actual [%s].' % (len(genres), len(genreList)))
         self.assertAlphabetical(genreList)
-        for genre in genres:
+        for genre in genreList:
             docs.navigateGenreDropdown(genre)
             sleep(1)
             showTitles = docs.getTitles()

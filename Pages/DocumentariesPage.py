@@ -52,7 +52,7 @@ class DocumentariesPage(CBCWebBase):
             optGenre = Find(by=By.LINK_TEXT, value=genre.upper(), context=self.subnav.dropdownGenre)
             optGenre.click()
         except:
-            raise ValueError('[%s] is not a valid genre' % genre)
+            raise ValueError('Failed to navigate to genre [%s]' % genre)
 
 
     def getTitles(self):
