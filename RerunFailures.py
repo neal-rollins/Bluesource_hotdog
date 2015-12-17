@@ -24,7 +24,7 @@ failed_tests = json.loads(r.content.decode("utf-8") )
 def run_all_test(device=None):
     tests_to_run = []
     for t in failed_tests:
-        if t[1] == device['options']['deviceName']:
+        if t[1] == device['options']['deviceName'].replace('.',''):
             tests_to_run.append(t[0])
 
     builtins.threadlocal.config = device
