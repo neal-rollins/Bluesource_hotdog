@@ -17,11 +17,9 @@ class ShowsTest(BaseTest):
         #Web App is Launched, Navigate to Shows Section
         common.navigateToSection('Shows')
 
-        #Validate On Shows Page
-        self.assertIn('active', common.navbar.btnShows.get_attribute('class'), 'Featured is not active tab')
-
         #Validate elements of Shows page
         shows = ShowsPage(driver=self.driver)
+        shows.subnav.openMenuIfMobile()
         self.assert_element_exists(shows.subnav.btnAll, 'All Shows Button')
         self.assert_element_exists(shows.subnav.btnGenre, 'Shows Genre Button')
         self.assertIn('active', shows.subnav.btnAll.get_attribute('class'), 'All not active tab')
@@ -39,6 +37,7 @@ class ShowsTest(BaseTest):
 
         #Click The All Button to Show All Shows
         shows = ShowsPage(driver=self.driver)
+        shows.subnav.openMenuIfMobile()
         shows.subnav.btnAll.click()
 
         #Assert All Shows Are in Alphabetical Order and that Each Show has a Banner and a Title
@@ -70,9 +69,9 @@ class ShowsTest(BaseTest):
         #self.assertEqual(len(genreList), len(genres), 'Unexpected number of genres found.  Expected [%s]. Actual [%s]' % (len(genres), len(genreList)))
         for genre in genres:
             shows.navigateGenreDropdown(genre)
-            sleep(1)
+            sleep(3)
             showTitles = shows.getTitles()
-            self.assertEqual(genre.lower(), shows.subnav.btnGenre.text.lower())
+            self.assertEqual(genre.lower(), shows.subnav.currentGenre)
             self.assertGreater(len(showTitles), 0, 'No Shows found on shows page')
             for show in shows.shows:
                 self.assert_element_exists(show.imgShowBanner, 'Show Image')

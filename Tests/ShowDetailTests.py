@@ -17,20 +17,22 @@ class ShowDetailsTest(BaseTest):
         #Navigate to all shows
         sleep(1)
         shows = ShowsPage(driver=self.driver)
+        isMobile = shows.isMobile
         showTitle = shows.clickOnShow(random=True)
 
         #Validate Show Detail Elements
         sleep(1)
         showDetail = ShowDetailsPage(driver=self.driver)
-        showDetail.assert_element_present('imgHero')
-        showDetail.assert_element_present('txtSeriesTitle')
-        showDetail.assert_element_present('imgAd')
+        showDetail.assert_element_present('imgHero', timeout=20)
+        showDetail.assert_element_present('txtSeriesTitle', timeout=20)
+        showDetail.assert_element_present('imgAd', timeout=20)
         self.assertGreater(len(showDetail.listEpisodes), 0, 'No Episodes found for show [%s]' % showTitle)
         for episode in showDetail.listEpisodes:
             self.assert_element_exists(episode.imgShowImage, 'Episode Image')
             self.assert_element_exists(episode.txtEpisodeDetail, 'Episode Detail')
             self.assert_element_exists(episode.txtEpisodeTitle, 'Episode Title')
-            self.assert_element_exists(episode.txtEpisodeDescription, 'Episode Description')
+            if not isMobile:
+                self.assert_element_exists(episode.txtEpisodeDescription, 'Episode Description')
 
     def test_navigateContentDetail(self):
         #Open App and Navigate to Shows
@@ -39,8 +41,8 @@ class ShowDetailsTest(BaseTest):
         common.navigateToSection('SHOWS')
 
         #Navigate to all shows
-        sleep(1)
         shows = ShowsPage(driver=self.driver)
+        shows.sync()
         showTitle = shows.clickOnShow(random=True)
 
         #Validate Content Detail Loads
@@ -61,11 +63,11 @@ class ShowDetailsTest(BaseTest):
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
         common.navigateToSection('SHOWS')
-        self.driver.maximize_window()
 
         #Navigate to all shows and select show
         sleep(1)
         shows = ShowsPage(driver=self.driver)
+        isMobile = shows.isMobile
         showTitle = shows.clickOnShow(title='Blackstone')
 
         #Verify Elements Season 2
@@ -74,7 +76,8 @@ class ShowDetailsTest(BaseTest):
             showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
             showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")
             showDetail.assert_element_exists(episode.txtEpisodeTitle, "Episode Title")
-            showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
+            if not isMobile:
+                showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
             showDetail.assert_element_exists(episode.txtEpisodeNumber, "Episode Number")
             showDetail.assert_element_exists(episode.txtDuration, "Episode Duration")
 
@@ -88,7 +91,8 @@ class ShowDetailsTest(BaseTest):
             showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
             showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")
             showDetail.assert_element_exists(episode.txtEpisodeTitle, "Episode Title")
-            showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
+            if not isMobile:
+                showDetail.assert_element_exists(episode.txtEpisodeDescription, "Episode Description")
             showDetail.assert_element_exists(episode.txtEpisodeNumber, "Episode Number")
             showDetail.assert_element_exists(episode.txtDuration, "Episode Duration")
 

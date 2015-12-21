@@ -18,6 +18,7 @@ class DocumentaryTest(BaseTest):
 
         #Validate elements of Documentaries page
         docs = DocumentariesPage(driver=self.driver)
+        docs.subnav.openMenuIfMobile()
         self.assert_element_exists(docs.subnav.btnAll, 'All Documentaries Button')
         self.assert_element_exists(docs.subnav.btnGenre, 'Documentaries Genre Button')
         self.assertIn('active', docs.subnav.btnAll.get_attribute('class'), 'All not active tab')
@@ -40,9 +41,9 @@ class DocumentaryTest(BaseTest):
         self.assertAlphabetical(genreList)
         for genre in genreList:
             docs.navigateGenreDropdown(genre)
-            sleep(1)
+            sleep(3)
             showTitles = docs.getTitles()
-            self.assertEqual(genre.lower(), docs.subnav.btnGenre.text.lower())
+            self.assertEqual(genre.lower(), docs.subnav.currentGenre)
             self.assertGreater(len(showTitles), 0, 'No Shows found on shows page')
             for show in docs.shows:
                 assert show.imgShowBanner

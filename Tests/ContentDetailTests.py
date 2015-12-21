@@ -20,6 +20,7 @@ class ContentDetailsTest(BaseTest):
         #Navigate to all shows and select show
         shows = ShowsPage(driver=self.driver)
         shows.sync()
+        isMobile = shows.isMobile
         showTitle = shows.clickOnShow(random=True)
 
         #Navigate to Content Detail
@@ -32,7 +33,8 @@ class ContentDetailsTest(BaseTest):
         contentDetail = ContentDetailPage(driver=self.driver)
         contentDetail.assert_element_present('txtBreadcrumbs')
         contentDetail.assert_element_present('btnPlay')
-        contentDetail.assert_element_present('imgAd')
+        if not isMobile:
+            contentDetail.assert_element_present('imgAd')
         contentDetail.assert_element_present('txtEpisodeNumber')
         contentDetail.assert_element_present('txtDuration')
         contentDetail.assert_element_present('txtEpisodeTitle')

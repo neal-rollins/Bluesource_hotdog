@@ -1,11 +1,13 @@
-from time import sleep
-
+from time import sleep, time
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
 from Helpers.BasePage import CBCWebBase
 import random as rand
+
+from Helpers.Retry import Retry
+
 
 class GenreDropdown(WebElement):
     btnBiography = Find(by=By.LINK_TEXT, value='BIOGRAPHY')
@@ -19,7 +21,26 @@ class SubNav(WebElement):
     btnAll = Find(by=By.LINK_TEXT, value='ALL')
     btnGenre = Find(by=By.CSS_SELECTOR, value='.dropdown .controls')
     dropdownGenre = Find(GenreDropdown, by=By.CLASS_NAME, value='menu')
+    mobileControls = Find(by=By.CLASS_NAME, value='selected-mobile')
 
+    def openMenuIfMobile(self):
+        try:
+            self.mobileControls.click()
+            sleep(2)
+            self.isMobile = True
+            return True
+        except:
+            return False
+
+    @property
+    def currentGenre(self):
+        try:
+            if self.mobileControls.is_displayed():
+                return self.mobileControls.text.lower().replace('+', '').replace('-','').strip()
+            else:
+                return self.btnGenre.text.lower()
+        except:
+            return self.btnGenre.text.lower()
 
 class ShowsCard(WebElement):
     imgShowBanner = Find(by=By.CLASS_NAME, value='media-banner')
@@ -31,6 +52,10 @@ class DocumentariesPage(CBCWebBase):
     shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
     syncElement =  (By.CSS_SELECTOR, '.selected[href="/documentaries/"]')
 
+    @property
+    def isMobile(self):
+        return self.subnav.mobileControls.is_displayed()
+
     def navigateSubNav(self, title):
         if title.lower() == 'all':
             self.subnav.btnAll.click()
@@ -38,15 +63,21 @@ class DocumentariesPage(CBCWebBase):
             raise ValueError('[%s] is not a valid subsection' % title)
 
     def getGenreList(self):
+        isMobile = self.subnav.openMenuIfMobile()
         self.driver.execute_script("arguments[0].click()", self.subnav.btnGenre)
         sleep(1)
         genrelist = []
         for genre in self.subnav.dropdownGenre.listDropdownOptions:
-            genrelist.append(genre.text)
+            if isMobile:
+                genrelist.append(genre.text.replace('+', '').replace('-','').strip())
+            else:
+                genrelist.append(genre.text)
         self.subnav.btnGenre.click()
+        self.subnav.openMenuIfMobile()
         return genrelist
 
     def navigateGenreDropdown(self, genre):
+        self.subnav.openMenuIfMobile()
         self.subnav.btnGenre.click()
         try:
             optGenre = Find(by=By.LINK_TEXT, value=genre.upper(), context=self.subnav.dropdownGenre)
@@ -62,6 +93,13 @@ class DocumentariesPage(CBCWebBase):
 
         return titles
 
+    @Retry
+    def getShows(self):
+        shows = self.shows
+        assert len(shows) > 0, "No Shows Found"
+        return shows
+
+    @Retry
     def clickOnShow(self, title=None, index=0, random=False):
 
         if random:

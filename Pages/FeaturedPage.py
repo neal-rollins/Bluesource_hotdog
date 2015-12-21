@@ -4,6 +4,8 @@ from appium.webdriver.common.mobileby import MobileBy as By
 from Helpers.BasePage import CBCWebBase
 from time import sleep
 
+from Helpers.Retry import Retry
+
 
 class ShowsCard(WebElement):
     imgShowBanner = Find(by=By.CLASS_NAME, value='media-banner')
@@ -50,3 +52,9 @@ class FeaturedPage(CBCWebBase):
     def getCurrentCarouselTitle(self):
         tagline = self.txtCarouselTagline.text
         return tagline
+
+    @Retry
+    def getShows(self):
+        shows = self.shows
+        assert len(shows) > 0, "No Shows Found"
+        return shows

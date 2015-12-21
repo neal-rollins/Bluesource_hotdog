@@ -20,6 +20,7 @@ class KidsTests(BaseTest):
 
         #Validate elements of Kids page
         kids = KidsPage(driver=self.driver)
+        kids.subnav.openMenuIfMobile()
         self.assert_element_exists(kids.subnav.btnAll, 'All Documentaries Button')
         self.assertIn('active', kids.subnav.btnAll.get_attribute('class'), 'All not active tab')
         titles = kids.getTitles()

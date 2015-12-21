@@ -1,6 +1,9 @@
 import webium
 from selenium.webdriver.remote.webelement import WebElement
 import random as rand
+
+from Helpers.Retry import Retry
+
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -8,7 +11,8 @@ from hotdog.FindEither import FindEither
 from Helpers.BaseTest import BaseTest
 from Helpers.BasePage import CBCWebBase
 from selenium.webdriver.remote.webelement import WebElement
-from time import sleep
+from time import sleep, time
+
 
 class EpisodeDetail(WebElement):
     imgShowImage = Find(by=By.CLASS_NAME, value='media-image')
@@ -26,6 +30,13 @@ class ShowDetailsPage(CBCWebBase):
     imgHero = Find(by=By.CLASS_NAME, value='media-hero')
     imgAd = Find(by=By.ID, value='showAd')
 
+    @Retry
+    def getEpisodes(self):
+        episodes = self.listEpisodes
+        assert len(episodes) > 0, "No Episodes Found"
+        return episodes
+
+    @Retry
     def clickOnEpisode(self, title=None, index=0, random=False):
         if random:
             episode = rand.choice(self.listEpisodes)
@@ -52,6 +63,7 @@ class ShowDetailsPage(CBCWebBase):
         season[0].click()
         print(season)
 
+    @Retry
     def goToPreviousSeason(self):
         #Instantiates the Variables
         i = 0
@@ -75,6 +87,7 @@ class ShowDetailsPage(CBCWebBase):
         seasonToFind = 'SEASON ' + str(previousSeasonNumber)
         Find(context=self, by=By.PARTIAL_LINK_TEXT, value=seasonToFind).click()
 
+    @Retry
     def goToNextSeason(self):
         #Instantiates the Variables
         i = 0
@@ -97,6 +110,7 @@ class ShowDetailsPage(CBCWebBase):
         seasonToFind = 'SEASON ' + str(previousSeasonNumber)
         Find(context=self, by=By.PARTIAL_LINK_TEXT, value=seasonToFind).click()
 
+    @Retry
     def verifyOnSeason(self, seasonNumber):
         i = 0
         listOfSeasons = []
@@ -119,3 +133,4 @@ class ShowDetailsPage(CBCWebBase):
         self.driver.implicitly_wait(timeout)
         Find(by=By.XPATH, value="//h1[contains(@class, 'series-title') and text() = '%s']" % title, context=self)
         self.driver.implicitly_wait(webium.settings.implicit_timeout)
+        sleep(5)

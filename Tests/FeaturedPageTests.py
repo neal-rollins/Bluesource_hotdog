@@ -64,7 +64,7 @@ class FeaturedPageTests(BaseTest):
             featured = FeaturedPage(driver=self.driver)
             featured.sync()
 
-            show = featured.shows[x]
+            show = featured.getShows()[x]
             showTitle = show.txtTitle.text
             show.click()
             title = FindEither(context=common, selectors=[[By.CLASS_NAME, 'series-title'],

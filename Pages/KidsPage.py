@@ -5,10 +5,31 @@ from webium import Find, Finds
 from Helpers.BasePage import CBCWebBase
 import random as rand
 
+from Helpers.Retry import Retry
+
 
 class SubNav(WebElement):
     btnAll = Find(by=By.LINK_TEXT, value='ALL')
+    mobileControls = Find(by=By.CLASS_NAME, value='selected-mobile')
 
+    def openMenuIfMobile(self):
+        try:
+            self.mobileControls.click()
+            sleep(2)
+            self.isMobile = True
+            return True
+        except:
+            return False
+
+    @property
+    def currentGenre(self):
+        try:
+            if self.mobileControls.is_displayed():
+                return self.mobileControls.text.lower().replace('+', '').replace('-','').strip()
+            else:
+                return self.btnGenre.text.lower()
+        except:
+            return self.btnGenre.text.lower()
 
 class ShowsCard(WebElement):
     imgShowBanner = Find(by=By.CLASS_NAME, value='media-banner')
@@ -33,15 +54,22 @@ class KidsPage(CBCWebBase):
 
         return titles
 
-    def clickOnShow(self, title=None, index=0, random=False):
+    @Retry
+    def getShows(self):
+        shows = self.shows
+        assert len(shows) > 0, "No Shows Found"
+        return shows
 
+    @Retry
+    def clickOnShow(self, title=None, index=0, random=False):
+        shows = self.getShows()
         if random:
-            show = rand.choice(self.shows)
+            show = rand.choice(shows)
             showTitle = show.txtTitle.text
             show.imgShowBanner.click()
         elif title:
             found = False
-            for show in self.shows:
+            for show in shows:
                 if show.txtTitle.text.lower() == title.lower():
                     showTitle = show.txtTitle.text
                     show.imgShowBanner.click()
@@ -50,7 +78,7 @@ class KidsPage(CBCWebBase):
             if not found:
                 raise AssertionError('Could not find show with title [%s]' % title)
         else:
-            showTitle = self.shows[index].txtTitle.text
-            self.shows[index].imgShowBanner.click()
+            showTitle = shows[index].txtTitle.text
+            shows[index].imgShowBanner.click()
 
         return showTitle

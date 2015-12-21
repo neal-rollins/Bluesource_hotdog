@@ -1,5 +1,6 @@
 import os
 
+import time
 from hotdog.Config import GetConfig
 from Helpers.FilePath import get_full_path
 os.environ['PROJECTFOLDER'] = get_full_path('')
@@ -28,8 +29,15 @@ class BaseTest(HotDogBaseTest):
         for i in range(len(list)-1):
             assert list[i].lower() < list[i+1].lower(), 'Items not in alphabetical order.  Found entry [%s] before [%s]' % (list[i], list[i+1])
 
-    def assert_element_exists(self, element, name):
-        assert element.is_displayed(), 'The element [%s] was not found' % name
+    def assert_element_exists(self, element, name, timeout=20):
+        start = time.time()
+        while True:
+            try:
+                assert element.is_displayed(), 'The element [%s] was not found' % name
+                return True
+            except:
+                if time.time() - start > timeout:
+                    raise
 
 
 
