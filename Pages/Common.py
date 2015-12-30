@@ -1,6 +1,8 @@
 from time import sleep
 from hotdog.FindEither import FindEither
 
+from Helpers.Retry import Retry
+
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -25,8 +27,7 @@ class NavBar(WebElement):
 
 
 class CommonPage(CBCWebBase):
-    navbar = FindEither(ui_type=NavBar, selectors= [[By.CLASS_NAME, 'nav-bar'],
-                                                    [By.CLASS_NAME, 'nav-menu']])
+    navbar = Find(ui_type=NavBar, by=By.CLASS_NAME, value='nav-bar')
     footer = Find(Footer, by=By.CLASS_NAME, value='footer-section')
     btnHome = Find(by=By.CLASS_NAME, value='client-logo-nav')
     genreDropdown = Find(by=By.CLASS_NAME, value='controls-label')
@@ -35,6 +36,7 @@ class CommonPage(CBCWebBase):
     loadingContent = Find(by=By.CLASS_NAME, value='loading')
     carousel = Find(by=By.CLASS_NAME, value='carousel')
     carouselDots = Find(by=By.CLASS_NAME, value='carousel-dots')
+    txtFooterHeader = Find(by=By.CLASS_NAME, value='footer-header-text')
 
     btnActiveCarouselDot = Find(by=By.CLASS_NAME, value='carousel-dot-active')
     btnCarouselDots = Finds(by=By.CLASS_NAME, value='carousel-dot')
@@ -44,10 +46,12 @@ class CommonPage(CBCWebBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    @Retry
     def navigateToSection(self, SectionName):
         try:
             if self.elemenent_exists(self.navbar.btnToggle):
                 if 'open' not in self.navbar.btnToggle.get_attribute('class'):
+                    sleep(5)
                     self.navbar.btnToggle.click()
                     sleep(1)
         except:

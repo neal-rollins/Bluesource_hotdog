@@ -59,7 +59,7 @@ class ContentDetailsTest(BaseTest):
 
         #Navigate Back via breadcrumb
         contentDetail = ContentDetailPage(driver=self.driver)
-        sleep(1)
+        contentDetail.sync()
         contentDetail.assert_element_present('txtBreadcrumbs')
         breadcrumb = contentDetail.txtBreadcrumbs.text
         self.assertEqual(breadcrumb.lower(), showTitle.lower(), 'Breadcrumb does not match expected show title. Expected [%s].  Actual [%s]' % (breadcrumb, showTitle))
@@ -68,6 +68,7 @@ class ContentDetailsTest(BaseTest):
         #Validate Navigated back to correct Show Detail page
         sleep(1)
         showDetail = ShowDetailsPage(driver=self.driver)
+        showDetail.sync(showTitle)
         self.assertEqual(breadcrumb.lower(), showDetail.txtSeriesTitle.text.lower(),
                          'Failed to navigate back to correct page via breadcrumb.  Expected [%s].  Actual [%s]' % (breadcrumb, showDetail.txtSeriesTitle.text))
 

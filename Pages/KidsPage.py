@@ -1,7 +1,12 @@
 from time import sleep
+from types import MethodType
+
+import webium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
+from webium.base_page import is_element_present
+
 from Helpers.BasePage import CBCWebBase
 import random as rand
 
@@ -38,8 +43,17 @@ class ShowsCard(WebElement):
 
 class KidsPage(CBCWebBase):
     subnav = Find(SubNav, by=By.CLASS_NAME, value='menu-bar')
-    shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
+    #shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
     syncElement =  (By.CSS_SELECTOR, '.selected[href="/kids/"]')
+
+    @property
+    def shows(self):
+        shows = self.driver.find_elements_by_class_name('media-card')
+        for show in shows:
+            show.__class__ = ShowsCard
+            show.is_element_present = MethodType(is_element_present, show)
+            show.implicitly_wait = webium.settings.implicit_timeout
+        return shows
 
     def navigateSubNav(self, title):
         if title.lower() == 'all':

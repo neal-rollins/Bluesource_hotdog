@@ -12,8 +12,17 @@ class FeaturedPageTests(BaseTest):
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.navbar.btnToggle.click()
+            sleep(3)
+        else:
+            isMobile = False
+
         #Validate On Feature Page
         self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+
 
         #Validate Header Elements
         self.assert_element_exists(common.navbar.btnShows, 'Shows Button')
@@ -22,13 +31,27 @@ class FeaturedPageTests(BaseTest):
         self.assert_element_exists(common.navbar.btnKids, 'Kids Button')
         self.assert_element_exists(common.btnHome, 'CBC Logo')
 
+
     def test_footerElements(self):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.navbar.btnToggle.click()
+            sleep(3)
+        else:
+            isMobile = False
+
         #Validate On Feature Page
         self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+        if isMobile:
+            common.navbar.btnToggle.click()
+            sleep(3)
+            common.txtFooterHeader.click()
+            sleep(3)
 
         self.assert_element_exists(common.footer.linkTermsOfUse, 'Terms of Use')
         self.assert_element_exists(common.footer.linkPrivacyPolicy, 'linkPrivacyPolicy')
@@ -43,8 +66,18 @@ class FeaturedPageTests(BaseTest):
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.navbar.btnToggle.click()
+            sleep(3)
+        else:
+            isMobile = False
+
         #Validate On Feature Page
         self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+        if isMobile:
+            common.navbar.btnToggle.click()
 
         featured = FeaturedPage(driver=self.driver)
         for show in featured.shows:
@@ -56,12 +89,22 @@ class FeaturedPageTests(BaseTest):
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.open()
 
+        #If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.navbar.btnToggle.click()
+            sleep(3)
+        else:
+            isMobile = False
+
         #Validate On Feature Page
         self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+        if isMobile:
+            common.navbar.btnToggle.click()
 
         featured = FeaturedPage(driver=self.driver)
         for x in range(len(featured.shows)):
-            featured = FeaturedPage(driver=self.driver)
+            #featured = FeaturedPage(driver=self.driver)
             featured.sync()
 
             show = featured.getShows()[x]
@@ -70,6 +113,8 @@ class FeaturedPageTests(BaseTest):
             title = FindEither(context=common, selectors=[[By.CLASS_NAME, 'series-title'],
                                                   [By.CLASS_NAME, 'detail-title']]).text
             self.assertEqual(showTitle.lower(), title.lower(), 'Failed to navigate to correct detail screen.  Expected [%s].  Actual [%s]' % (showTitle, title))
+
+            common.sync()
             common.back()
             sleep(1)
 

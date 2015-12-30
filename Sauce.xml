@@ -17,7 +17,7 @@
         <platform>web</platform>
         <platformName>Windows 8.1</platformName>
         <browserName>firefox</browserName>
-        <version>41</version>
+        <version>43</version>
     </node>
 
     <node>
@@ -31,7 +31,7 @@
         <platform>web</platform>
         <platformName>Mac OS X 10.11</platformName>
         <browserName>firefox</browserName>
-        <version>41</version>
+        <version>43</version>
     </node>
 
     <node>

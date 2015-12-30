@@ -1,6 +1,11 @@
+from types import MethodType
+
+import webium
 from selenium.webdriver.remote.webelement import WebElement
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
+from webium.base_page import is_element_present
+
 from Helpers.BasePage import CBCWebBase
 from time import sleep
 
@@ -14,13 +19,23 @@ class ShowsCard(WebElement):
 
 class FeaturedPage(CBCWebBase):
 
-    shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
+    #shows = Finds(ShowsCard, by=By.CLASS_NAME, value='media-card')
     btnActiveCarouselDot = Find(by=By.CLASS_NAME, value='carousel-dot-active')
     btnCarouselDots = Finds(by=By.CLASS_NAME, value='carousel-dot')
     btnCarouselButtons = Finds(by=By.CLASS_NAME, value='carousel-control')
     btnCarouselNext = Find(by=By.NAME, value='Next')
     txtCarouselTagline = Find(by=By.CLASS_NAME, value='tagline-title')
+
     syncElement =  (By.CSS_SELECTOR, '.selected[href="/"]')
+
+    @property
+    def shows(self):
+        shows = self.driver.find_elements_by_class_name('media-card')
+        for show in shows:
+            show.__class__ = ShowsCard
+            show.is_element_present = MethodType(is_element_present, show)
+            show.implicitly_wait = webium.settings.implicit_timeout
+        return shows
 
     def cycleThroughCarousel(self, directionToClick):
         carouselInfo = str(self.btnActiveCarouselDot.text)

@@ -112,6 +112,7 @@ class ShowDetailsTest(BaseTest):
         #Click a Random Episode then Return Back
         episodeTitle = showDetail.clickOnEpisode(random=True)
         contentDetail = ContentDetailPage(driver=self.driver)
+        contentDetail.sync()
         self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
         contentDetail.back()
 

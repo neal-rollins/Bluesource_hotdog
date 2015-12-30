@@ -1,6 +1,10 @@
+from types import MethodType
+
 import webium
 from selenium.webdriver.remote.webelement import WebElement
 import random as rand
+
+from webium.base_page import is_element_present
 
 from Helpers.Retry import Retry
 
@@ -26,9 +30,18 @@ class EpisodeDetail(WebElement):
 class ShowDetailsPage(CBCWebBase):
     txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')
     txtActiveSeason = Find(by=By.CLASS_NAME, value='active')
-    listEpisodes = Finds(EpisodeDetail, by=By.CSS_SELECTOR, value='figure.media-card')
+    #listEpisodes = Finds(EpisodeDetail, by=By.CSS_SELECTOR, value='figure.media-card')
     imgHero = Find(by=By.CLASS_NAME, value='media-hero')
     imgAd = Find(by=By.ID, value='showAd')
+
+    @property
+    def listEpisodes(self):
+        shows = self.driver.find_elements_by_css_selector('figure.media-card')
+        for show in shows:
+            show.__class__ = EpisodeDetail
+            show.is_element_present = MethodType(is_element_present, show)
+            show.implicitly_wait = webium.settings.implicit_timeout
+        return shows
 
     @Retry
     def getEpisodes(self):
