@@ -28,7 +28,6 @@ class ShowsTest(BaseTest):
             self.assert_element_exists(show.imgShowBanner, 'Show Image')
             self.assert_element_exists(show.txtTitle, 'Show Title')
 
-
     def test_navigateAllShows(self):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url=self.page_url)

@@ -23,7 +23,7 @@ class ShowDetailsTest(BaseTest):
         #Validate Show Detail Elements
         sleep(1)
         showDetail = ShowDetailsPage(driver=self.driver)
-        showDetail.assert_element_present('imgHero', timeout=20)
+        showDetail.assert_element_present('imgHero', timeout=30)
         showDetail.assert_element_present('txtSeriesTitle', timeout=20)
         showDetail.assert_element_present('imgAd', timeout=20)
         self.assertGreater(len(showDetail.listEpisodes), 0, 'No Episodes found for show [%s]' % showTitle)
@@ -103,6 +103,7 @@ class ShowDetailsTest(BaseTest):
         contentDetail.back()
 
         #Verify Still on Right Season
+        showDetail.sync(showTitle)
         showDetail.verifyOnSeason(1)
 
         #Go To Next Season, Verify on That Season
@@ -117,4 +118,5 @@ class ShowDetailsTest(BaseTest):
         contentDetail.back()
 
         #Verify Still on Right Season
+        showDetail.sync(showTitle)
         showDetail.verifyOnSeason(2)

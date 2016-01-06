@@ -7,6 +7,8 @@ import unittest
 import threading
 import builtins
 import requests
+import random
+
 os.environ['PROJECTFOLDER'] = get_full_path('')
 
 from appium_selector.DeviceSelector import DeviceSelector
@@ -21,12 +23,15 @@ r = requests.post(MustardURL, data={'project_id': MustardKey,})
 builtins.threadlocal = threading.local()
 failed_tests = json.loads(r.content.decode("utf-8") )
 
-def run_all_test(device=None):
+
+
+def run_test(device=None):
     tests_to_run = []
     for t in failed_tests:
         if t[1] == device['options']['deviceName'].replace('.',''):
             tests_to_run.append(t[0])
 
+    random.shuffle(tests_to_run)
     builtins.threadlocal.config = device
     loader = unittest.TestLoader()
     tests = loader.discover('./Tests', pattern='*Tests.py')
@@ -36,9 +41,11 @@ def run_all_test(device=None):
         if tc._testMethodName in tests_to_run:
             runner.run(tc)
 
+
+
 threads =[]
 for device in DeviceSelector(True, platform='desktop').getDevice():
-    t = threading.Thread(target=run_all_test, args=[device])
+    t = threading.Thread(target=run_test, args=[device])
     threads.append(t)
     t.start()
 
