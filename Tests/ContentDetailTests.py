@@ -63,12 +63,13 @@ class ContentDetailsTest(BaseTest):
         contentDetail.assert_element_present('txtBreadcrumbs')
         breadcrumb = contentDetail.txtBreadcrumbs.text
         self.assertEqual(breadcrumb.lower(), showTitle.lower(), 'Breadcrumb does not match expected show title. Expected [%s].  Actual [%s]' % (breadcrumb, showTitle))
-        contentDetail.txtBreadcrumbs.click()
+        self.driver.execute_script('arguments[0].click();', contentDetail.txtBreadcrumbs)
 
         #Validate Navigated back to correct Show Detail page
         sleep(1)
         showDetail = ShowDetailsPage(driver=self.driver)
         showDetail.sync(showTitle)
+        showDetail.assert_element_exists(showDetail.txtSeriesTitle, 'Series Title [%s]' % showTitle)
         self.assertEqual(breadcrumb.lower(), showDetail.txtSeriesTitle.text.lower(),
                          'Failed to navigate back to correct page via breadcrumb.  Expected [%s].  Actual [%s]' % (breadcrumb, showDetail.txtSeriesTitle.text))
 

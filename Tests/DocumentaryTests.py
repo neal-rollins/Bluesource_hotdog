@@ -88,7 +88,7 @@ class DocumentaryTest(BaseTest):
             #Select Random Documentary
             showTitle = docs.clickOnShow(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
-            contentDetail.assert_element_present('txtEpisodeTitle', timeout=5)
+            contentDetail.assert_element_present('txtEpisodeTitle', timeout=20)
             self.assertEqual(showTitle.lower(), contentDetail.txtEpisodeTitle.text.lower(),
                              'Loaded incorrect Content Detail page for [%s]. Actually loaded [%s]' % (showTitle, contentDetail.txtEpisodeTitle.text))
             contentDetail.back()

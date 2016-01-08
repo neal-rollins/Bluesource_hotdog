@@ -31,7 +31,6 @@ class FeaturedPageTests(BaseTest):
         self.assert_element_exists(common.navbar.btnKids, 'Kids Button')
         self.assert_element_exists(common.btnHome, 'CBC Logo')
 
-
     def test_footerElements(self):
         #Open App and Navigate to Shows
         common = CommonPage(driver=self.driver, url=self.page_url)

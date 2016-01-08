@@ -55,6 +55,7 @@ class ShowDetailsTest(BaseTest):
 
             episodeTitle = showDetail.clickOnEpisode(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
+            contentDetail.assert_element_exists(contentDetail.txtEpisodeTitle,'Episode Title for %s' % episodeTitle)
             self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
             contentDetail.back()
 
