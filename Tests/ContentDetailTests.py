@@ -55,12 +55,12 @@ class ContentDetailsTest(BaseTest):
         #Navigate to Content Detail
         sleep(1)
         showDetail = ShowDetailsPage(driver=self.driver)
-        showDetail.clickOnEpisode(random=True)
+        episodeName = showDetail.clickOnEpisode(random=True)
 
         #Navigate Back via breadcrumb
         contentDetail = ContentDetailPage(driver=self.driver)
         contentDetail.sync()
-        contentDetail.assert_element_present('txtBreadcrumbs')
+        assert contentDetail.is_element_present('txtBreadcrumbs'), 'Breadcrumb not found for asset [%s %s]' % (showTitle, episodeName)
         breadcrumb = contentDetail.txtBreadcrumbs.text
         self.assertEqual(breadcrumb.lower(), showTitle.lower(), 'Breadcrumb does not match expected show title. Expected [%s].  Actual [%s]' % (breadcrumb, showTitle))
         self.driver.execute_script('arguments[0].click();', contentDetail.txtBreadcrumbs)
