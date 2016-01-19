@@ -11,10 +11,12 @@ from selenium.webdriver.remote.webelement import WebElement
 from time import sleep
 
 class Footer(WebElement):
+    btnFooterMenu = Find(by=By.CLASS_NAME, value='footer-menu')
     linkTermsOfUse = Find(by=By.LINK_TEXT, value='Terms of Use')
     linkPrivacyPolicy = Find(by=By.LINK_TEXT, value='Privacy Policy')
     linkReusePermission = Find(by=By.LINK_TEXT, value='Reuse & Permission')
     linkHelp = Find(by=By.LINK_TEXT, value='Help')
+    linkContact = Find(by=By.LINK_TEXT, value='Contact Us')
     imgFooterLogo = Find(by=By.CSS_SELECTOR, value='.client-logo-footer')
     txtCopywrite = Find(by=By.CSS_SELECTOR, value='.footer-client-attr > p')
 
@@ -87,6 +89,12 @@ class CommonPage(CBCWebBase):
     def pauseCarousel(self):
         self.btnPlayPauseCarousel.click()
         sleep(1)
+
+    @Retry
+    def getShowOrContentTitle(self):
+         title = FindEither(context=self, selectors=[[By.CLASS_NAME, 'series-title'],
+                                                  [By.CLASS_NAME, 'detail-title']]).text
+         return title
 
     def testCarousel(self):
         carouselInfo = str(self.btnActiveCarouselDot.text)

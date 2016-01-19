@@ -5,8 +5,6 @@ from Pages.Common import CommonPage
 from Pages.ShowDetailsPage import ShowDetailsPage
 from Pages.ShowsPage import ShowsPage
 
-expectedGenres = ['News & Current Affairs', 'Comedy', 'Documentary', 'Drama']
-
 class ShowsTest(BaseTest):
 
     def test_NavigateToShows(self):
@@ -63,7 +61,8 @@ class ShowsTest(BaseTest):
         genreList = shows.getGenreList()
         self.assertAlphabetical(genreList)
 
-        genres = expectedGenres
+        genres =  shows.getGenreList()
+
         self.assertGreater(len(genreList), 0, 'No Genres Found for Shows')
         #self.assertEqual(len(genreList), len(genres), 'Unexpected number of genres found.  Expected [%s]. Actual [%s]' % (len(genres), len(genreList)))
         for genre in genres:
@@ -101,7 +100,7 @@ class ShowsTest(BaseTest):
 
         #Get Genre List
         shows = ShowsPage(driver=self.driver)
-        genreList = expectedGenres
+        genreList = shows.getGenreList()
 
         #Validate Random Shows with Random Genre
         for i in range(1):

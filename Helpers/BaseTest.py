@@ -3,6 +3,8 @@ import os
 import time
 from hotdog.Config import GetConfig
 from Helpers.FilePath import get_full_path
+from Helpers.Retry import Retry
+
 os.environ['PROJECTFOLDER'] = get_full_path('')
 
 import builtins
@@ -28,6 +30,10 @@ class BaseTest(HotDogBaseTest):
     def assertAlphabetical(self, list):
         for i in range(len(list)-1):
             assert list[i].lower() < list[i+1].lower(), 'Items not in alphabetical order.  Found entry [%s] before [%s]' % (list[i], list[i+1])
+
+    @Retry
+    def assert_in_url(self, string):
+        assert string in self.driver.current_url, 'Did not load page with string [%]' % string
 
     def assert_element_exists(self, element, name, timeout=30):
         start = time.time()

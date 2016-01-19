@@ -83,8 +83,8 @@ class ShowDetailsTest(BaseTest):
             showDetail.assert_element_exists(episode.txtDuration, "Episode Duration")
 
         #Go To Previous Season, Verify on That Season
-        showDetail.goToPreviousSeason()
-        showDetail.verifyOnSeason(1)
+        showDetail.goToNextSeason()
+        showDetail.verifyOnSeason(2)
 
         #Verify Elements Season 1
         showDetail = ShowDetailsPage(driver=self.driver)
@@ -105,11 +105,11 @@ class ShowDetailsTest(BaseTest):
 
         #Verify Still on Right Season
         showDetail.sync(showTitle)
-        showDetail.verifyOnSeason(1)
+        showDetail.verifyOnSeason(2)
 
         #Go To Next Season, Verify on That Season
-        showDetail.goToNextSeason()
-        showDetail.verifyOnSeason(2)
+        showDetail.goToPreviousSeason()
+        showDetail.verifyOnSeason(1)
 
         #Click a Random Episode then Return Back
         episodeTitle = showDetail.clickOnEpisode(random=True)
@@ -120,4 +120,4 @@ class ShowDetailsTest(BaseTest):
 
         #Verify Still on Right Season
         showDetail.sync(showTitle)
-        showDetail.verifyOnSeason(2)
+        showDetail.verifyOnSeason(1)

@@ -56,7 +56,6 @@ class FeaturedPageTests(BaseTest):
         self.assert_element_exists(common.footer.linkPrivacyPolicy, 'linkPrivacyPolicy')
         self.assert_element_exists(common.footer.linkReusePermission, 'linkReusePermission')
         self.assert_element_exists(common.footer.linkHelp, 'linkHelp')
-        self.assert_element_exists(common.footer.imgFooterLogo, 'imgFooterLogo')
         self.assert_element_exists(common.footer.txtCopywrite, 'txtCopywrite')
         self.assertEqual(common.footer.txtCopywrite.text, '©2015 CBC/Radio-Canada. All rights reserved')
 
@@ -109,13 +108,97 @@ class FeaturedPageTests(BaseTest):
             show = featured.getShows()[x]
             showTitle = show.txtTitle.text
             show.click()
-            title = FindEither(context=common, selectors=[[By.CLASS_NAME, 'series-title'],
-                                                  [By.CLASS_NAME, 'detail-title']]).text
+            title = common.getShowOrContentTitle()
             self.assertEqual(showTitle.lower(), title.lower(), 'Failed to navigate to correct detail screen.  Expected [%s].  Actual [%s]' % (showTitle, title))
 
             common.sync()
-            common.back()
+            common.navigateToSection('Featured')
             sleep(1)
 
-    def test_footerLinks(self):
-        assert False, 'Footer links are currently not functional'
+    def test_footerLinksTermsOfUse(self):
+         #Open App
+        common = CommonPage(driver=self.driver, url=self.page_url)
+        common.open()
+
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.footer.btnFooterMenu.click()
+            sleep(3)
+        else:
+            isMobile = False
+
+        common.footer.linkTermsOfUse.click()
+        sleep(5)
+        self.assert_in_url('termsofuse')
+
+    def test_footerLinksPrivacy(self):
+         #Open App
+        common = CommonPage(driver=self.driver, url=self.page_url)
+        common.open()
+
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.footer.btnFooterMenu.click()
+            sleep(3)
+        else:
+            isMobile = False
+
+        common.footer.linkPrivacyPolicy.click()
+        sleep(5)
+        self.assert_in_url('privacy')
+
+    def test_footerLinksReuse(self):
+         #Open App
+        common = CommonPage(driver=self.driver, url=self.page_url)
+        common.open()
+
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.footer.btnFooterMenu.click()
+            sleep(3)
+        else:
+            isMobile = False
+
+        common.footer.linkReusePermission.click()
+        sleep(5)
+        self.assert_in_url('permissions')
+
+
+    def test_footerLinksHelp(self):
+         #Open App
+        common = CommonPage(driver=self.driver, url=self.page_url)
+        common.open()
+
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.footer.btnFooterMenu.click()
+            sleep(3)
+        else:
+            isMobile = False
+
+        common.footer.linkHelp.click()
+        sleep(5)
+        self.assert_in_url('connects')
+
+
+    def test_footerLinksContactUs(self):
+         #Open App
+        common = CommonPage(driver=self.driver, url=self.page_url)
+        common.open()
+
+        # If Mobile open menu
+        if common.navbar.btnToggle.is_displayed():
+            isMobile = True
+            common.footer.btnFooterMenu.click()
+            sleep(3)
+        else:
+            isMobile = False
+
+        common.footer.linkContact.click()
+        sleep(5)
+        self.assert_in_url('connects')
+

@@ -25,7 +25,7 @@ class EpisodeDetail(WebElement):
                                   [By.CLASS_NAME, 'asset-title']])
     txtEpisodeDescription = Find(by=By.CLASS_NAME, value='description')
     txtEpisodeNumber = Find(by=By.CLASS_NAME, value='episode-number-short')
-    txtDuration = Find(by=By.CSS_SELECTOR, value="li[aria-label~='Duration:']")
+    txtDuration = Find(by=By.CSS_SELECTOR, value=".duration-label + span")
 
 class ShowDetailsPage(CBCWebBase):
     txtSeriesTitle = Find(by=By.CLASS_NAME, value='series-title')
@@ -36,12 +36,20 @@ class ShowDetailsPage(CBCWebBase):
 
     @property
     def listEpisodes(self):
-        shows = self.driver.find_elements_by_css_selector('figure.media-card')
+        shows = self.get_show_cards()
         for show in shows:
             show.__class__ = EpisodeDetail
             show.is_element_present = MethodType(is_element_present, show)
             show.implicitly_wait = webium.settings.implicit_timeout
         return shows
+
+    @Retry
+    def get_show_cards(self):
+        shows = self.driver.find_elements_by_css_selector('figure.media-card')
+        if len(shows) == 0:
+            raise Exception('No Shows found')
+        else:
+            return shows
 
     @Retry
     def getEpisodes(self):

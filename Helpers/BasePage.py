@@ -37,3 +37,7 @@ class CBCWebBase(HotDogBasePage):
     @Retry
     def assert_element_exists(self, element, name):
         assert self.elemenent_exists(element), 'Element [%s] not found' % name
+
+    @Retry
+    def assert_in_url(self, string):
+        assert string in self.driver.current_url, 'Did not load page with string [%]' % string

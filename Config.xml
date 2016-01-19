@@ -10,7 +10,7 @@
     <SAUCE_USERNAME>MattWatson</SAUCE_USERNAME>
     <SAUCE_ACCESS>8ec13fcb-fae2-4ce5-87cb-bfdd31a55f43</SAUCE_ACCESS>
 
-    <APP_URL>http://project-igloo-preprod.maple.willowtreemobile.com/</APP_URL>
+    <APP_URL>http://project-igloo-prod.maple.willowtreemobile.com/</APP_URL>
 
     <ANDROID_BUNDLE_ID></ANDROID_BUNDLE_ID>
     <ANDROID_APP_URL></ANDROID_APP_URL>

@@ -7,6 +7,7 @@ import unittest
 import threading
 import builtins
 import requests
+import random
 os.environ['PROJECTFOLDER'] = get_full_path('')
 
 from appium_selector.DeviceSelector import DeviceSelector
@@ -32,6 +33,7 @@ def run_all_test(device=None):
     tests = loader.discover('./Tests', pattern='*Tests.py')
     runner = unittest.TextTestRunner()
     tcs = [y for x in[y for x in test_name(tests) for y in x] for y in x]
+    random.shuffle(tcs)
     for tc in tcs:
         if tc._testMethodName in tests_to_run:
             runner.run(tc)
