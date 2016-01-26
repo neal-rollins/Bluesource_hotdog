@@ -29,11 +29,12 @@ def run_all_test(device=None):
             tests_to_run.append(t[0])
 
     builtins.threadlocal.config = device
+    builtins.threadlocal.driver = None
     loader = unittest.TestLoader()
     tests = loader.discover('./Tests', pattern='*Tests.py')
     runner = unittest.TextTestRunner()
     tcs = [y for x in[y for x in test_name(tests) for y in x] for y in x]
-    random.shuffle(tcs)
+   # random.shuffle(tcs)
     for tc in tcs:
         if tc._testMethodName in tests_to_run:
             runner.run(tc)

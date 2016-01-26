@@ -33,6 +33,7 @@ def run_test(device=None):
 
     random.shuffle(tests_to_run)
     builtins.threadlocal.config = device
+    builtins.threadlocal.driver = None
     loader = unittest.TestLoader()
     tests = loader.discover('./Tests', pattern='*Tests.py')
     runner = unittest.TextTestRunner()

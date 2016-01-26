@@ -1,9 +1,15 @@
 import os
 
 import time
+
+import sys
 from hotdog.Config import GetConfig
+from testtools.testcase import unittest
+
 from Helpers.FilePath import get_full_path
 from Helpers.Retry import Retry
+from selenium import webdriver as seleniumWebdriver
+from appium import webdriver
 
 os.environ['PROJECTFOLDER'] = get_full_path('')
 
@@ -19,9 +25,7 @@ class BaseTest(HotDogBaseTest):
 
     @classmethod
     def setUpClass(cls):
-        if not hasattr(builtins, 'threadlocal'):
-            builtins.threadlocal = threading.local()
-            builtins.threadlocal.config = DeviceSelector(platform='desktop').getDevice()[0]
+        super().setUpClass(platform='desktop')
 
     def setUp(self):
         super().setUp()
@@ -46,4 +50,15 @@ class BaseTest(HotDogBaseTest):
                     raise
 
 
-
+    @classmethod
+    def RemoveApp(self):
+        if 'mobile' in builtins.threadlocal.config['options']['provider']:
+            try: builtins.threadlocal.driver.close_app()
+            except: pass
+            try: builtins.threadlocal.driver.remove_app(GetConfig('IOS_BUNDLE_ID'))
+            except: pass
+            try: builtins.threadlocal.driver.remove_app(GetConfig('ANDROID_BUNDLE_ID'))
+            except: pass
+        try: builtins.threadlocal.driver.quit()
+        except: pass
+        builtins.threadlocal.driver = None
