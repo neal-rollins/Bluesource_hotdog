@@ -41,6 +41,7 @@ def get_tests():
         builtins.threadlocal = threading.local()
 
         loader = unittest.TestLoader()
+
         tests = loader.discover('./Tests', pattern='*Tests.py')
         runner = unittest.TextTestRunner()
 
@@ -50,11 +51,13 @@ def get_tests():
             if tc._testMethodName in tests_to_run:
                 t = threading.Thread(target=run_all_test, args=[device, tc])
                 threads.append(t)
+
                 t.start()
 
 def run_all_test(device=None, test=None):
 
     builtins.threadlocal.config = device
+    builtins.threadlocal.driver = None
     runner = unittest.TextTestRunner()
     runner.run(test)
 

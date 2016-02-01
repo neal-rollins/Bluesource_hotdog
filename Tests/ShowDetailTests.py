@@ -1,4 +1,5 @@
 from time import sleep
+
 from Helpers.BaseTest import BaseTest
 from Pages.Common import CommonPage
 from Pages.ContentDetailPage import ContentDetailPage
@@ -73,7 +74,9 @@ class ShowDetailsTest(BaseTest):
 
         #Verify Elements Season 2
         showDetail = ShowDetailsPage(driver=self.driver)
+        showDetail.sync(showTitle)
         for episode in showDetail.listEpisodes:
+
             showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
             showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")
             showDetail.assert_element_exists(episode.txtEpisodeTitle, "Episode Title")
@@ -88,6 +91,7 @@ class ShowDetailsTest(BaseTest):
 
         #Verify Elements Season 1
         showDetail = ShowDetailsPage(driver=self.driver)
+        showDetail.sync(showTitle)
         for episode in showDetail.listEpisodes:
             showDetail.assert_element_exists(episode.imgShowImage, "Show Image")
             showDetail.assert_element_exists(episode.txtEpisodeDetail, "Episode Detail")

@@ -32,7 +32,7 @@ class ContentDetailsTest(BaseTest):
         #Validate Content Detail Elements
         contentDetail = ContentDetailPage(driver=self.driver)
         contentDetail.assert_element_present('txtBreadcrumbs')
-        contentDetail.assert_element_present('btnPlay')
+        #contentDetail.assert_element_present('btnPlay') Removed due to autoplay
         if not isMobile:
             contentDetail.assert_element_present('imgAd')
         contentDetail.assert_element_present('txtEpisodeNumber')

@@ -17,6 +17,7 @@ builtins.threadlocal = threading.local()
 def run_all_test(device=None):
     builtins.threadlocal.config = device
     builtins.threadlocal.driver = None
+    builtins.threadlocal.keepSession = True
     loader = unittest.TestLoader()
 
     tests = loader.discover('./Tests', pattern='*Tests.py')

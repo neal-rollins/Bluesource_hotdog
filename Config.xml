@@ -1,5 +1,5 @@
 <CONFIG>
-     <GRID_URL>http:/google.com:4444</GRID_URL>
+     <GRID_URL>http://10.238.242.145:4444</GRID_URL>
 
     <MUSTARD_URL>http://mustard.orasi.com/results</MUSTARD_URL>
     <MUSTARD_KEY>d00fa543c3c15b950b4e31903941930a</MUSTARD_KEY>
