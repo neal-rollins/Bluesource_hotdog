@@ -39,6 +39,7 @@ class BaseTest(HotDogBaseTest):
     def assert_in_url(self, string):
         assert string in self.driver.current_url, 'Did not load page with string [%]' % string
 
+
     def assert_element_exists(self, element, name, timeout=30):
         start = time.time()
         while True:
@@ -48,7 +49,6 @@ class BaseTest(HotDogBaseTest):
             except:
                 if time.time() - start > timeout:
                     raise
-
 
     @classmethod
     def RemoveApp(self):
@@ -62,3 +62,7 @@ class BaseTest(HotDogBaseTest):
         try: builtins.threadlocal.driver.quit()
         except: pass
         builtins.threadlocal.driver = None
+
+    @Retry
+    def assertEqual(self, first, second, msg=None):
+        super().assertEqual(first, second, msg)

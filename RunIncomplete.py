@@ -17,7 +17,7 @@ MustardKey = GetConfig('MUSTARD_KEY')
 
 os.environ['AddMustard'] = 'True'
 
-r = requests.post(MustardURL, data={'project_id': MustardKey,})
+r = requests.post(MustardURL, data={'project_id': MustardKey,}, verify=False)
 
 builtins.threadlocal = threading.local()
 failed_tests = json.loads(r.content.decode("utf-8") )

@@ -56,7 +56,7 @@ class ShowDetailsTest(BaseTest):
 
             episodeTitle = showDetail.clickOnEpisode(random=True)
             contentDetail = ContentDetailPage(driver=self.driver)
-            contentDetail.assert_element_exists(contentDetail.txtEpisodeTitle,'Episode Title for %s' % episodeTitle)
+            self.assert_element_exists(contentDetail.txtEpisodeTitle,'Episode Title for %s' % episodeTitle)
             self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
             contentDetail.back()
 
@@ -104,6 +104,7 @@ class ShowDetailsTest(BaseTest):
         #Click a Random Episode then Return Back
         episodeTitle = showDetail.clickOnEpisode(random=True)
         contentDetail = ContentDetailPage(driver=self.driver)
+        #todo: Wrap Retry around assert equal
         self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
         contentDetail.back()
 
@@ -119,6 +120,7 @@ class ShowDetailsTest(BaseTest):
         episodeTitle = showDetail.clickOnEpisode(random=True)
         contentDetail = ContentDetailPage(driver=self.driver)
         contentDetail.sync()
+        #todo: Wrap Retry around assert equal
         self.assertEqual(episodeTitle.lower(), contentDetail.txtEpisodeTitle.text.lower())
         contentDetail.back()
 

@@ -74,10 +74,12 @@ class FeaturedPageTests(BaseTest):
 
         #Validate On Feature Page
         self.assertIn('active', common.navbar.btnFeatured.get_attribute('class'), 'Featured is not active tab')
+
         if isMobile:
             common.navbar.btnToggle.click()
 
         featured = FeaturedPage(driver=self.driver)
+        featured.assert_element_exists(featured.carousel, 'Carousel')
         for show in featured.shows:
             self.assert_element_exists(show.imgShowBanner, 'Show Image')
             self.assert_element_exists(show.txtTitle, 'Show Title')

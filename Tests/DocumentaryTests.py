@@ -18,6 +18,7 @@ class DocumentaryTest(BaseTest):
 
         #Validate elements of Documentaries page
         docs = DocumentariesPage(driver=self.driver)
+        self.assert_element_exists(docs.carousel, 'Carousel')
         docs.subnav.openMenuIfMobile()
         self.assert_element_exists(docs.subnav.btnAll, 'All Documentaries Button')
         self.assert_element_exists(docs.subnav.btnGenre, 'Documentaries Genre Button')

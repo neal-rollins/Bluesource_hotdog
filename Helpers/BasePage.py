@@ -11,6 +11,8 @@ webium.settings.implicit_timeout = 60
 
 class CBCWebBase(HotDogBasePage):
 
+    carousel = Find(by=By.CLASS_NAME, value='carousel')
+
     def __init__(self, *args, **kwargs):
         webium.settings.implicit_timeout = 60
         super().__init__(*args, **kwargs)

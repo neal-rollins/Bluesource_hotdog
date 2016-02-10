@@ -17,6 +17,7 @@ class ShowsTest(BaseTest):
 
         #Validate elements of Shows page
         shows = ShowsPage(driver=self.driver)
+        self.assert_element_exists(shows.carousel, 'Carousel')
         shows.subnav.openMenuIfMobile()
         self.assert_element_exists(shows.subnav.btnAll, 'All Shows Button')
         self.assert_element_exists(shows.subnav.btnGenre, 'Shows Genre Button')
