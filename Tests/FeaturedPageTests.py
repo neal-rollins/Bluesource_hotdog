@@ -57,7 +57,7 @@ class FeaturedPageTests(BaseTest):
         self.assert_element_exists(common.footer.linkReusePermission, 'linkReusePermission')
         self.assert_element_exists(common.footer.linkHelp, 'linkHelp')
         self.assert_element_exists(common.footer.txtCopywrite, 'txtCopywrite')
-        self.assertEqual(common.footer.txtCopywrite.text, '©2015 CBC/Radio-Canada. All rights reserved')
+        self.assertEqual(common.footer.txtCopywrite.text, '©2016 CBC/Radio-Canada. All rights reserved')
 
     def test_featuredPageElements(self):
         #Open App
