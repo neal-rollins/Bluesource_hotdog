@@ -26,7 +26,7 @@ class ShowDetailsTest(BaseTest):
         showDetail = ShowDetailsPage(driver=self.driver)
         showDetail.assert_element_present('imgHero', timeout=30)
         showDetail.assert_element_present('txtSeriesTitle', timeout=20)
-        showDetail.assert_element_present('imgAd', timeout=20)
+        #showDetail.assert_element_present('imgAd', timeout=20) Removed from App
         self.assertGreater(len(showDetail.listEpisodes), 0, 'No Episodes found for show [%s]' % showTitle)
         for episode in showDetail.listEpisodes:
             self.assert_element_exists(episode.imgShowImage, 'Episode Image')

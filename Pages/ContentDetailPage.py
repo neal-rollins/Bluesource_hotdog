@@ -1,5 +1,7 @@
 from time import sleep
 
+from Helpers.Retry import Retry
+
 __author__ = 'brian.menzies'
 from webium import Find, Finds
 from appium.webdriver.common.mobileby import MobileBy as By
@@ -26,31 +28,46 @@ class ContentDetailPage(CBCWebBase):
         self.assert_element_present('txtPausedState', timeout=3), 'The Video Player Was Not Paused'
 
     def getTimeStamp(self):
-        timeElapsed = self.txtElapsedTime.text
+        timeElapsed = self.driver.execute_script("return document.getElementsByClassName('jw-text-elapsed')[0].innerHTML")
         timeElapsed = timeElapsed.split(':')
         minutes = int(timeElapsed[0]) * 60
         seconds = int(timeElapsed[1])
         timeStamp = minutes + seconds
         return timeStamp
 
-    def verifyVideoHasPlayed(self, timeAtStart, timeAtEnd):
-        assert timeAtEnd > timeAtStart, 'Expected [%s] to be greater than [%s]' % (timeAtEnd, timeAtStart)
+    @Retry
+    def wait_for_video_load(self):
+        sleep(5)
+        ad_text =self.driver.execute_script("return document.getElementsByClassName('jw-text-alt')[0].innerHTML")
+        if ad_text == 'Loading':
+            raise AssertionError('Video failed to load')
+    @Retry
+    def ad_playing(self):
+        ad_text = self.driver.execute_script("return document.getElementsByClassName('jw-text-alt')[0].innerHTML")
+        if ad_text.find('This ad will end') == -1:
+            raise AssertionError('Failed to play ad. Ad text [%s]' % ad_text)
 
-    def playVideo(self, loadTime=10, adTime = 30, playTime=10):
-        self.btnPlay.click()
-        sleep(loadTime)
-        sleep(adTime)
-        self.videoPlayer.click()
-        startTime = self.getTimeStamp()
-        assert (startTime < 30), 'Expected Time on Video to be less than 30 seconds. Instead it was at [%s] seconds' % startTime
-        self.videoPlayer.click()
-        sleep(playTime)
-        self.videoPlayer.click()
-        endTime = self.getTimeStamp()
-        self.verifyVideoHasPlayed(startTime, endTime)
+    @Retry
+    def wait_for_ad(self):
 
+        ad_text = self.driver.execute_script("return document.getElementsByClassName('jw-text-alt')[0].innerHTML")
 
+        sleep([int(s) for s in ad_text.split() if s.isdigit()][0])
+        sleep(5)
+        ad_text = self.driver.execute_script("return document.getElementsByClassName('jw-text-alt')[0].innerHTML")
+        if ad_text.find('This ad will end') != -1:
+            raise AssertionError('Ad Failed to end. Ad text [%s]' % ad_text)
 
+    @Retry
+    def isVideoPlaying(self):
+        playback_index = self.driver.execute_script("return document.getElementsByClassName('jw-text-elapsed')[0].innerHTML")
+        sleep(2)
+        if playback_index == self.driver.execute_script("return document.getElementsByClassName('jw-text-elapsed')[0].innerHTML"):
+            raise AssertionError('Video failed to play. Index = %s' % playback_index)
 
-
+    def play_for_time(self, seconds):
+        playback_index = self.getTimeStamp()
+        sleep(2)
+        while self.getTimeStamp() - playback_index <  seconds:
+            pass
 

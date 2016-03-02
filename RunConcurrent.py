@@ -16,7 +16,7 @@ MustardKey = GetConfig('MUSTARD_KEY')
 
 os.environ['AddMustard'] = 'True'
 
-r = requests.post(MustardURL, data={'project_id': MustardKey,}, verify=False)
+r = requests.post(MustardURL, data={'project_id': MustardKey,})
 threads =[]
 def test_name(parent):
     tns = []

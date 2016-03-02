@@ -1,6 +1,6 @@
 import time
 
-def Retry(func, timeout=10):
+def Retry(func, timeout=30):
     def inner(*args, **kwargs):
         start = time.time()
         while True:
