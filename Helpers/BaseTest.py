@@ -2,19 +2,15 @@ import os
 
 import time
 
-import sys
 from hotdog.Config import GetConfig
-from testtools.testcase import unittest
 
 from Helpers.FilePath import get_full_path
-from Helpers.Retry import Retry
-from selenium import webdriver as seleniumWebdriver
-from appium import webdriver
-
+from hotdog.Retry import Retry
 os.environ['PROJECTFOLDER'] = get_full_path('')
 
 import builtins
 import threading
+
 from appium_selector.DeviceSelector import DeviceSelector
 from hotdog.BaseTest import HotDogBaseTest
 

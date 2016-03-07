@@ -1,21 +1,16 @@
 from time import sleep
-
 from hotdog.BasePage import HotDogBasePage
-import webium
-from selenium.webdriver.common.by import By
-from webium import Find
-
-from Helpers.Retry import Retry
-
-webium.settings.implicit_timeout = 60
+from hotdog.Retry import Retry
 
 class CBCWebBase(HotDogBasePage):
 
-    carousel = Find(by=By.CLASS_NAME, value='carousel')
-
     def __init__(self, *args, **kwargs):
-        webium.settings.implicit_timeout = 60
         super().__init__(*args, **kwargs)
+
+    def find(self, objectName, type=None):
+        locators = getattr(self, objectName)
+        element = self.driver.find_element(locators[0], locators[1], type=type)
+        return element
 
     def back(self):
         self.driver.execute_script("window.history.go(-1)");
@@ -30,11 +25,10 @@ class CBCWebBase(HotDogBasePage):
     def sync(self, timeout=20):
         self.driver.implicitly_wait(timeout)
         if hasattr(self, 'syncElement'):
-            Find(by=self.syncElement[0], value=self.syncElement[1], context=self)
+            self.find('syncElement')
         else:
             sleep(5)
-        self.driver.implicitly_wait(webium.settings.implicit_timeout)
-        sleep(3)
+        self.driver.implicitly_wait(30)
 
     @Retry
     def assert_element_exists(self, element, name):
