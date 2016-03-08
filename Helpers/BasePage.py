@@ -7,14 +7,6 @@ class CBCWebBase(HotDogBasePage):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def find(self, objectName, type=None):
-        locators = getattr(self, objectName)
-        element = self.driver.find_element(locators[0], locators[1], type=type)
-        return element
-
-    def back(self):
-        self.driver.execute_script("window.history.go(-1)");
-
     def elemenent_exists(self, element):
         try:
             displayed = element.is_displayed()

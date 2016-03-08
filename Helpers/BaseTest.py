@@ -1,17 +1,10 @@
-import os
-
-import time
-
 from hotdog.Config import GetConfig
-
+import os
+import time
 from Helpers.FilePath import get_full_path
 from hotdog.Retry import Retry
 os.environ['PROJECTFOLDER'] = get_full_path('')
-
 import builtins
-import threading
-
-from appium_selector.DeviceSelector import DeviceSelector
 from hotdog.BaseTest import HotDogBaseTest
 
 

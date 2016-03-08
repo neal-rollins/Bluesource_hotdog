@@ -12,8 +12,13 @@ class SearchTests(BaseTest):
         common = CommonPage(driver=self.driver, url=self.page_url)
         common.sync()
 
+        headerText = common.find('headerText')
+        headerText.click()
+
         box1  = common.Checkboxes.find('checkbox1')
-        box1.click()
+        box1.check()
+        box1.uncheck()
+        assert not box1.is_checked()
 
         seleniumLink = common.find('seleniumLink')
         seleniumLink.click()
