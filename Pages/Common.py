@@ -6,8 +6,11 @@ from Elements.Checkbox import Checkbox
 
 class Checkboxes(BaseElement):
 
-    checkbox1 = (By.CSS_SELECTOR, "input[type='checkbox']", Checkbox)
+    checkboxesLoc = (By.CSS_SELECTOR, "input[type='checkbox']", Checkbox)
 
+    @property
+    def checkboxes(self):
+        return self.finds('checkboxesLoc')
 
 class CommonPage(CBCWebBase):
 
