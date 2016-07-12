@@ -1,23 +1,13 @@
-from time import sleep
-from appium.webdriver.common.mobileby import MobileBy as By
-from Helpers.BasePage import CBCWebBase
-from hotdog.BaseElement import BaseElement
+from selenium.webdriver.common.by import By
+from Helpers.BasePage import BasePage
 from Elements.Checkbox import Checkbox
 
-class Checkboxes(BaseElement):
+class CommonPage(BasePage):
 
-    checkboxesLoc = (By.CSS_SELECTOR, "input[type='checkbox']", Checkbox)
+    header_text = (By.CSS_SELECTOR, '.example h3')
+    checkboxes = (By.CSS_SELECTOR, 'input', Checkbox)
+    selenium_link = (By.LINK_TEXT, 'Elemental Selenium')
 
-    @property
-    def checkboxes(self):
-        return self.finds('checkboxesLoc')
-
-class CommonPage(CBCWebBase):
-
-    headerText = (By.CSS_SELECTOR, '.example h3')
-    checkboxLoc = (By.ID, 'checkboxes', Checkbox)
-    seleniumLink = (By.LINK_TEXT, 'Elemental Selenium')
-
-    @property
-    def Checkboxes(self):
-        return self.find('checkboxLoc', type=Checkboxes)
+    def get_checkboxes(self):
+        checkboxes = self.finds('checkboxes')
+        return checkboxes

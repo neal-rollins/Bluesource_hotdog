@@ -1,6 +1,5 @@
 from hotdog.BaseElement import BaseElement
 
-
 class Checkbox(BaseElement):
 
     def is_checked(self):
