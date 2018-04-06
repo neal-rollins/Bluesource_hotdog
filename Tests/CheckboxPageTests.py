@@ -10,6 +10,10 @@ class CheckboxPageTests(BaseTest):
         common = CommonPage(driver=self.driver)
         common.sync()
 
+        home = HomePage(driver=self.driver)
+        page_header = home.page_header()
+
+
         # Get the checkboxes
         boxes = common.get_checkboxes()
 
