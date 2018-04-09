@@ -30,6 +30,8 @@ class TablePageTests(BaseTest):
         alphabetical = sorted_last_name
 
 
+
+
     # test first table last name reversed alphabetical
     # table page element verifcation
 
