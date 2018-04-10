@@ -1,10 +1,10 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from Helpers.BasePage import BasePage
+from selenium.webdriver.common.keys import Keys
 
 class LoginPage(BasePage):
 
-    _page_header = (By.TAG_NAME, 'h1')
+    _page_header = (By.XPATH, '//*[@id="content"]/h1')
 
     _username_textbox = (By.ID, 'employee_username')
     _password_textbox = (By.ID, 'employee_password')
@@ -25,13 +25,11 @@ class LoginPage(BasePage):
     def password_textbox(self):
         return self.find('_password_textbox')
 
-    #def input_username
-
-    #def input_password
-
     def submit_login(self):
         submit_login_info = self.find('_login_btn')
         submit_login_info.click()
+
+
 
 
 
