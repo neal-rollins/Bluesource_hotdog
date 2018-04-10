@@ -25,11 +25,13 @@ class LoginPage(BasePage):
     def password_textbox(self):
         return self.find('_password_textbox')
 
+    #def input_username
+
+    #def input_password
+
     def submit_login(self):
         submit_login_info = self.find('_login_btn')
         submit_login_info.click()
-
-    ##pickup here
 
 
 
