@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from Helpers.BasePage import BasePage
+from Elements.WebTable import WebTable
 
 
 class AdminLandingPage(BasePage):
@@ -18,6 +19,8 @@ class AdminLandingPage(BasePage):
     _projects = (By.XPATH, '/html/body/header/div/nav/ul/li[6]')
     _employees = (By.XPATH, '/html/body/header/div/nav/ul/li[7]')
     _logout = (By.XPATH, '/html/body/header/div/nav/ul/li[8]')
+    _search_textbox = (By.CSS_SELECTOR, '#search-bar')
+    _employee_table = (By.TAG_NAME, 'tbody', WebTable)
 
     _sync_element = _admin_menu
 
@@ -69,4 +72,10 @@ class AdminLandingPage(BasePage):
     def logout(self):
         self.find('_logout')
 
-    
+    @property
+    def search_textbox(self):
+        self.finds('_search_textbox')
+
+    @property
+    def employee_table(self):
+        self.find('_employee_table')

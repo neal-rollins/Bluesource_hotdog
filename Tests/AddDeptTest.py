@@ -5,7 +5,7 @@ from Pages.DeptPage import DeptPage
 from Pages.NewDeptPage import NewDeptPage
 from hotdog.TestStep import TestStep
 from Tests.LoginPageTest import LoginPageTest
-#from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select
 from time import sleep
 
 class AddDeptTest(BaseTest):
@@ -33,7 +33,7 @@ class AddDeptTest(BaseTest):
         dept = DeptPage(self.driver)
         new_dept = NewDeptPage(self.driver)
 
-        admin.sync()
+        #admin.sync()
 
         admin.admin_menu.click()
         admin.admin_menu_departments.click()
@@ -47,14 +47,9 @@ class AddDeptTest(BaseTest):
         new_dept.sync()
         new_dept.name_textbox.send_keys(project_name)
 
-        #select = Select(new_dept.parent_dept_textbox)
-        #select.select_by_value(parent_dept)
-        #select.select_by_visible_text(parent_dept)
-        #sleep(2)
-
-        menu = new_dept.parent_dept_textbox
-        menu.scroll_element_to_center()
-        menu.click()
+        #new_dept.forms[1].click()
+        select = Select(new_dept.forms[1])
+        select.select_by_visible_text('DSS')
         sleep(2)
         new_dept.create_dept.click()
         add_new_dept_step('Complete')
