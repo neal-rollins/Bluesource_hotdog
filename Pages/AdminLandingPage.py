@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from Helpers.BasePage import BasePage
+from Elements.AdminMenuBar import AdminMenuBar
 from Elements.WebTable import WebTable
 
 
@@ -7,6 +8,19 @@ class AdminLandingPage(BasePage):
 
     _page_header = (By.XPATH, '// *[ @ id = "ng-app"]')
 
+    _admin_menu_bar = (By.CSS_SELECTOR, 'header.navbar', AdminMenuBar)
+
+    @property
+    def admin_menu_bar(self):
+        return self.find('_admin_menu_bar')
+
+    @property
+    def departments(self):
+        return self.find(self)
+
+
+
+    '''
     _admin_menu = (By.XPATH, '/html/body/header/div/nav/ul/li[1]')
     _admin_menu_departments = (By.XPATH, '/html/body/header/div/nav/ul/li[1]/ul/li/a[1]')
     _admin_menu_titles = (By.XPATH, '/html/body/header/div/nav/ul/li[1]/ul/li/a[2]')
@@ -71,6 +85,7 @@ class AdminLandingPage(BasePage):
     @property
     def logout(self):
         self.find('_logout')
+        '''
 
     @property
     def search_textbox(self):

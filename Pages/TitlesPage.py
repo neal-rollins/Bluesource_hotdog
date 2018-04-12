@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
 from Helpers.BasePage import BasePage
+from Elements.AdminMenuBar import AdminMenuBar
 
 class TitlesPage(BasePage):
 
     _page_header = (By.TAG_NAME, 'h1')
+    _admin_menu_bar = (By.CSS_SELECTOR, 'header.navbar', AdminMenuBar)
     _titles_listing_table = (By.CSS_SELECTOR, '#content > table')
     _table_rows = (By.TAG_NAME, 'tr')
     _new_title_btn = (By.CSS_SELECTOR, '#content > a')

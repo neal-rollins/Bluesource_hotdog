@@ -90,41 +90,6 @@ class WebTable(BaseElement):
 
         return last_names
 
-    '''
-    def get_emails(self):
-        rows = self.table_rows
-
-        emails = []
-        for row in rows:
-            cells = row.find_elements_by_tag_name('id')
-            email = cells[2]
-            emails.append(email.text)
-
-        return emails
-
-    def get_dues(self):
-        rows = self.table_rows
-
-        dues = []
-        for row in rows:
-            cells = row.find_elements_by_tag_name('id')
-            due = cells[3]
-            dues.append(due.text)
-
-        return dues
-
-    def get_websites(self):
-        rows = self.table_rows
-
-        websites = []
-        for row in rows:
-            cells = row.find_elements_by_tag_name('id')
-            website = cells[4]
-            websites.append(website.text)
-
-        return websites
-    '''
-
     @TestStep("Sort table by {args[1]}")
     def sort_table_by(self,sort_string,reverse_order=False):
         sort_string = sort_string.lower().strip()

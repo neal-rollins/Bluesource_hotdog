@@ -12,6 +12,19 @@
 
     <APP_URL>http://bluesourcestaging.herokuapp.com/login</APP_URL>
 
+    <USERNAMES>
+        <BASE>kevin.hedgecock</BASE>
+        <MANGEMENT>perry.thomas</MANGEMENT>
+        <UPPER_MANGEMENT>kristi.collins</UPPER_MANGEMENT>
+        <DEPARTMENT_HEAD>virginia.vestal</DEPARTMENT_HEAD>
+        <DEPARTMENT_ADMIN>linley.love</DEPARTMENT_ADMIN>
+        <COMPANY_ADMIN>company.admin</COMPANY_ADMIN>
+    </USERNAMES>
+
+    <PASSWORD>123</PASSWORD>
+
+    <DEPT_NAME>Dept 1024</DEPT_NAME>
+
     <ANDROID_BUNDLE_ID></ANDROID_BUNDLE_ID>
     <ANDROID_APP_URL></ANDROID_APP_URL>
     <IOS_BUNDLE_ID></IOS_BUNDLE_ID>

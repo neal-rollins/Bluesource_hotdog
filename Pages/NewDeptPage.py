@@ -10,7 +10,7 @@ class NewDeptPage(BasePage):
     #_parent_dept_textbox =
     #_minimum_hour_increment = (By.CSS_SELECTOR, '#department_minimum_hour_increment')
     #_alt_approver = (By.CSS_SELECTOR, '#department_alternate_approver_id')
-    #_create_dept = (By.CSS_SELECTOR, '#new_department > div:nth-child(7) > input[type="submit"]')
+    create_dept = (By.CSS_SELECTOR, '#new_department > div:nth-child(7) > input[type="submit"]')
 
     _sync_element = _new_dept_form
 
