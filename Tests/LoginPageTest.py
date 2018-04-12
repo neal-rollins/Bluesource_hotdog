@@ -1,5 +1,5 @@
 from Helpers.BaseTest import BaseTest
-from Helpers.CommonFunctions import CommonFunctions
+from Steps.CommonSteps import login_to_bluesource
 from Pages.AdminLandingPage import AdminLandingPage
 from hotdog.TestStep import TestStep
 from hotdog.Config import GetConfig
@@ -13,7 +13,7 @@ class LoginPageTest(BaseTest):
         _password = GetConfig('PASSWORD')
 
         login_step = TestStep('Attempt login with valid admin credentials')
-        CommonFunctions.login_to_bluesource(self, _username, _password)
+        login_to_bluesource(self, _username, _password)
         login_step('Complete')
 
         login_verification = TestStep('Verify user is logged in with admin permissions')
