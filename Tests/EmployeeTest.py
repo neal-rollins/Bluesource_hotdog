@@ -1,27 +1,28 @@
-from Pages.AdminLandingPage import AdminLandingPage
-from Helpers.BaseTest import BaseTest
-from Steps.CommonSteps import login_to_bluesource
 from hotdog.Config import GetConfig
 from hotdog.TestStep import TestStep
+
+from Helpers.BaseTest import BaseTest
+from Pages.AdminLandingPage import AdminLandingPage
+from Steps.CommonSteps import login_to_bluesource
 
 
 class EmployeeTests(BaseTest):
 
     def test_add_employee(self):
 
+        admin = AdminLandingPage(self.driver)
+
         _username = GetConfig('COMPANY_ADMIN')
         _password = GetConfig('PASSWORD')
-        _dept_name = GetConfig('DEPT_NAME')
+        # _dept_name = GetConfig('DEPT_NAME')
         _new_username = GetConfig('NEW_USERNAME')
         _employee_first_name = GetConfig('FIRST_NAME')
         _employee_last_name = GetConfig('LAST_NAME')
 
-        admin = AdminLandingPage(self.driver)
-
         login_to_bluesource(self, _username, _password)
         admin.sync()
 
-        add_new_employee_step = ('Attempt to add a new employee')
+        add_new_employee_step = TestStep('Attempt to add a new employee')
 
         admin.add_employee()
 
