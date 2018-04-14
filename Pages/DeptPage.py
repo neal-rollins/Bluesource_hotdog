@@ -68,8 +68,15 @@ class DeptPage(BasePage):
         edit_btns = self.edit_btns
         dept_names = []
         for dept in depts:
-            dept_names.append(dept.text[:-18])
-        print(dept_names.index(dept_name))
+            # account for nested dept by looping on /n
+            if '\n' in dept.text:
+                sub_dept_names = dept.text.splitlines()
+                for sub_dept_name in sub_dept_names:
+                    dept_names.append(sub_dept_name[:-18])
+
+                print('abc')
+            else:
+                dept_names.append(dept.text[:-18])
         return edit_btns[dept_names.index(dept_name)]
 
     def delete_dept(self, dept_name):
@@ -78,8 +85,15 @@ class DeptPage(BasePage):
         delete_btns = self.delete_btns
         dept_names = []
         for dept in depts:
-            dept_names.append(dept.text[:-18])
-        print(dept_names.index(dept_name))
+            # account for nested dept by looping on /n
+            if '\n' in dept.text:
+                sub_dept_names = dept.text.splitlines()
+                for sub_dept_name in sub_dept_names:
+                    dept_names.append(sub_dept_name[:-18])
+
+                print('abc')
+            else:
+                dept_names.append(dept.text[:-18])
 
         return delete_btns[dept_names.index(dept_name)]
 

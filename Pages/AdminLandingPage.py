@@ -1,6 +1,7 @@
-from Helpers.BasePage import BasePage
-from Elements.AdminMenuBar import AdminMenuBar
 from selenium.webdriver.common.by import By
+
+from Elements.AdminMenuBar import AdminMenuBar
+from Helpers.BasePage import BasePage
 
 
 class AdminLandingPage(BasePage):
@@ -15,6 +16,8 @@ class AdminLandingPage(BasePage):
     _last_name_field = (By.ID, 'employee_last_name')
     _create_employee_btn = (By.NAME, 'commit')
     _employee_creation_msg = (By.CLASS_NAME, 'alert-success')
+    _sync_element = _admin_menu_bar
+
 
     @property
     def admin_menu_bar(self):
