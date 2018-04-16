@@ -45,14 +45,20 @@ class DeptPage(BasePage):
     def add_new_dept(self):
         self.add_dept_btn.scroll_element_to_center().click()
 
-    def verify_dept_listed(self, new_dept):
+    def verify_dept_listed(self, query_dept):
         sleep(3)
         depts = self.depts
         for dept in depts:
-            if new_dept == dept.text[:-18]:
-                print(new_dept)
-                return True
+            #account for nested dept by looping on '/n'
+            if '\n' in dept.text:
+                sub_dept_names = dept.text.splitlines()
+                for sub_dept_name in sub_dept_names:
+                    if query_dept == sub_dept_name[:-18]:
+                        return True
+            elif query_dept == dept.text[:-18]:
+                        return True
         return False
+
 
     def get_dept_index(self, dept_name):
         sleep(3)
@@ -62,19 +68,18 @@ class DeptPage(BasePage):
             dept_names.append(dept.text[:-18])
         return dept_names.index(dept_name)
 
+
     def edit_dept(self, dept_name):
         sleep(3)
         depts = self.depts
         edit_btns = self.edit_btns
         dept_names = []
         for dept in depts:
-            # account for nested dept by looping on /n
+            # account for nested dept by looping on '/n'
             if '\n' in dept.text:
                 sub_dept_names = dept.text.splitlines()
                 for sub_dept_name in sub_dept_names:
                     dept_names.append(sub_dept_name[:-18])
-
-                print('abc')
             else:
                 dept_names.append(dept.text[:-18])
         return edit_btns[dept_names.index(dept_name)]
@@ -85,13 +90,11 @@ class DeptPage(BasePage):
         delete_btns = self.delete_btns
         dept_names = []
         for dept in depts:
-            # account for nested dept by looping on /n
+            # account for nested dept by looping on '/n'
             if '\n' in dept.text:
                 sub_dept_names = dept.text.splitlines()
                 for sub_dept_name in sub_dept_names:
                     dept_names.append(sub_dept_name[:-18])
-
-                print('abc')
             else:
                 dept_names.append(dept.text[:-18])
 

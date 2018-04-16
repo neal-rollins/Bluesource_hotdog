@@ -1,14 +1,15 @@
 from selenium.webdriver.common.by import By
-from Helpers.BasePage import BasePage
+
 from Elements.AdminMenuBar import AdminMenuBar
+from Helpers.BasePage import BasePage
 
 
-class NewTitlePage(BasePage):
+class TitleDetailsPage(BasePage):
 
     _page_header = (By.CSS_SELECTOR, '#content > h1')
     _admin_menu_bar = (By.CSS_SELECTOR, 'header.navbar', AdminMenuBar)
     _title_name_textbox = (By.CSS_SELECTOR, '#title_name')
-    _create_title_btn = (By.CSS_SELECTOR, '#new_title > div.actions > input')
+    _commit_title_btn = (By.CSS_SELECTOR, 'input[type="submit"]')
 
     _sync_element = _page_header
 
@@ -21,6 +22,6 @@ class NewTitlePage(BasePage):
         return self.find('_title_name_textbox')
 
     @property
-    def create_title_btn(self):
-        return self.find('_create_title_btn')
+    def commit_title_btn(self):
+        return self.find('_commit_title_btn')
 

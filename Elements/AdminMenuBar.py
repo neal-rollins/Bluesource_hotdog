@@ -41,8 +41,8 @@ class AdminMenuBar(BaseElement):
         return self.find('_calendar')
 
     @property
-    def reporting(self):
-        return self.find('_reporting')
+    def calendar_menu_reporting(self):
+        return self.find('_calendar_menu_reporting')
 
     @property
     def directory(self):
