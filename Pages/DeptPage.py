@@ -11,7 +11,7 @@ class DeptPage(BasePage):
     _page_header = (By.XPATH, '//*[@id="content"]/h1')
     _admin_menu_bar = (By.CSS_SELECTOR, 'header.navbar', AdminMenuBar)
     _add_dept_btn = (By.XPATH, '//*[@id="content"]/a')
-    _depts = (By.CLASS_NAME,'list-group')
+    _depts = (By.CLASS_NAME, 'list-group')
     _edit_btns = (By.CSS_SELECTOR, '.pull-right')
     _delete_btns = (By.CSS_SELECTOR, '[data-method="delete"]')
     _dept_creation_msg = (By.CLASS_NAME, 'alert-success')

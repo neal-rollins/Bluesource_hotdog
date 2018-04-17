@@ -14,7 +14,7 @@ class TitlesPage(BasePage):
     _edit_btns = (By.CSS_SELECTOR, '.pull-right')
     _delete_btns = (By.CSS_SELECTOR, '[data-method="delete"]')
     _new_title_btn = (By.CSS_SELECTOR, '#content > a')
-    _title_creation_msg = (By.CLASS_NAME, 'alert-success')
+    _action_success_msg = (By.CLASS_NAME, 'alert-success')
 
     _sync_element = _page_header
 
@@ -47,8 +47,8 @@ class TitlesPage(BasePage):
         return self.find('_new_title_btn')
 
     @property
-    def title_creation_msg(self):
-        return self.find('_title_creation_msg')
+    def action_success_msg(self):
+        return self.find('_action_success_msg')
 
 
     def new_title(self):
